@@ -6,7 +6,7 @@
   "version": 1,
   "newProjectRoot": "projects",
   "projects": {
-    "Angular12FirestoreCrud": {
+    "FantasySquadsUI": {
       "projectType": "application",
       "schematics": {
         "@schematics/angular:application": {
@@ -20,7 +20,7 @@
         "build": {
           "builder": "@angular-devkit/build-angular:browser",
           "options": {
-            "outputPath": "dist/Angular12FirestoreCrud",
+            "outputPath": "dist/FantasySquadsUI",
             "index": "src/index.html",
             "main": "src/main.ts",
             "polyfills": "src/polyfills.ts",
@@ -73,10 +73,10 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "Angular12FirestoreCrud:build:production"
+              "browserTarget": "FantasySquadsUI:build:production"
             },
             "development": {
-              "browserTarget": "Angular12FirestoreCrud:build:development"
+              "browserTarget": "FantasySquadsUI:build:development"
             }
           },
           "defaultConfiguration": "development"
@@ -84,7 +84,7 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n",
           "options": {
-            "browserTarget": "Angular12FirestoreCrud:build"
+            "browserTarget": "FantasySquadsUI:build"
           }
         },
         "test": {
@@ -108,5 +108,5 @@
       }
     }
   },
-  "defaultProject": "Angular12FirestoreCrud"
+  "defaultProject": "FantasySquadsUI"
 }
