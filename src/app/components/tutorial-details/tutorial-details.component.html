@@ -1,0 +1,20 @@
+<div *ngIf="currentSquad" class="edit-form">
+  <h4>{{currentSquad.name}}</h4>
+  <ul class="list-group">
+    <li
+      class="list-group-item"
+      *ngFor="let team of currentSquad.teamsList; let i = index"
+    >
+      {{ team }}
+    </li>
+  </ul>
+
+  <p>{{ message }}</p>
+
+  <button (click)="getTeamStats('alabama')">Get Stats</button>
+</div>
+
+<div *ngIf="!currentSquad">
+  <br />
+  <p>Cannot access this Tutorial...</p>
+</div>

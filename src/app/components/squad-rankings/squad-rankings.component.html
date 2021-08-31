@@ -1,0 +1,70 @@
+<div class="button-row">
+<button mat-raised-button color="primary" *ngIf="step > 0" (click)="getStats()">Get Stats</button>
+<button mat-raised-button color="accent" *ngIf="step === 2" (click)="getRankings()">Get Ranking</button>
+</div>
+<div *ngIf="statsVisible">
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let squadStat of squadStats">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{squadStat.name}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let category of squadStat.categoryTotals">
+                    {{ category.categoryName }} ---- {{category.total}}
+                </li>
+            </ul>
+        </mat-expansion-panel>
+    </mat-accordion>
+</div>
+<div *ngIf="rankingsVisible">
+    <mat-accordion>
+        <mat-expansion-panel *ngFor="let squadRank of squadRankings">
+            <mat-expansion-panel-header>
+                <mat-panel-title>
+                    {{squadRank.categoryName}}
+                </mat-panel-title>
+            </mat-expansion-panel-header>
+            <ul class="list-group">
+                <li class="list-group-item" *ngFor="let categoryRank of squadRank.squads">
+                    {{ categoryRank.rank }}. {{ categoryRank.squadName }} ---- {{categoryRank.total}}
+                </li>
+            </ul>
+        </mat-expansion-panel>
+    </mat-accordion>
+
+    <!-- <div  *ngFor="let squadRank of squadRankings">
+        {{squadRank.categoryName}}
+        <ul 
+        class="list-group"
+        >
+            <li
+              class="list-group-item"
+              *ngFor="let categoryRank of squadRank.squads"
+              
+            >
+            {{ categoryRank.rank }}. {{ categoryRank.squadName }} ---- {{categoryRank.total}}
+            </li>
+          </ul>
+    </div> -->
+</div>
+
+<div *ngIf="loadingData">
+    <div class="spinner-grow text-primary" role="status">
+    </div>
+    <div class="spinner-grow text-secondary" role="status">
+    </div>
+    <div class="spinner-grow text-success" role="status">
+    </div>
+    <div class="spinner-grow text-danger" role="status">
+    </div>
+    <div class="spinner-grow text-warning" role="status">
+    </div>
+    <div class="spinner-grow text-info" role="status">
+    </div>
+    <div class="spinner-grow text-light" role="status">
+    </div>
+    <div class="spinner-grow text-dark" role="status">
+    </div>
+</div>

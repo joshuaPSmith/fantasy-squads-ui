@@ -1,0 +1,30 @@
+<div class="list row">
+  <div class="col-md-6">
+    <h4>Tutorials List</h4>
+    <ul class="list-group">
+      <li
+        class="list-group-item"
+        *ngFor="let squad of squads; let i = index"
+        [class.active]="i == currentIndex"
+        (click)="setActiveTutorial(squad, i)"
+      >
+        {{ squad.name }}
+      </li>
+    </ul>
+  </div>
+  <div class="col-md-6">
+    <div *ngIf="currentSquad">
+      <app-tutorial-details
+        (refreshList)="refreshList()"
+        [squad]="currentSquad"
+      ></app-tutorial-details>
+    </div>
+
+    <div *ngIf="!currentSquad">
+      <br />
+      <p>Please click on a Tutorial...</p>
+      <button (click)="getStats()">Get Stats</button>
+      <button (click)="retrieveSquads()">Get Squads</button>
+    </div>
+  </div>
+</div>

@@ -1,0 +1,21 @@
+<div>
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a href="#" class="navbar-brand">Fantasy Squads</a>
+    <div class="navbar-nav mr-auto">
+      <li class="nav-item">
+        <a routerLink="squads" class="nav-link">Squads</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="rankings" class="nav-link">Ranking</a>
+      </li>
+      <li class="nav-item">
+        <a routerLink="add" class="nav-link">Add</a>
+      </li>
+    </div>
+  </nav>
+
+  <div class="container mt-3">
+    <h2>{{ title }}</h2>
+    <router-outlet></router-outlet>
+  </div>
+</div>

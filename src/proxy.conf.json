@@ -1,0 +1,8 @@
+{
+    "/stats*": {
+      "target": "https://api.collegefootballdata.com",
+      "secure": false,
+      "logLevel": "debug",
+      "changeOrigin": true
+    }
+  }
