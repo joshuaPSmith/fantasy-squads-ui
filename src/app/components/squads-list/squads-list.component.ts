@@ -39,13 +39,9 @@ export class SquadsListComponent implements OnInit {
     });
   }
 
-  setActiveTutorial(squad: Squad, index: number): void {
+  setActiveSquad(squad: Squad, index: number): void {
     this.currentSquad = squad;
     this.currentIndex = index;
-  }
-
-  public async getStats() {
-    this.statsService.getStats();
   }
 
 }

@@ -6,7 +6,7 @@
         class="list-group-item"
         *ngFor="let squad of squads; let i = index"
         [class.active]="i == currentIndex"
-        (click)="setActiveTutorial(squad, i)"
+        (click)="setActiveSquad(squad, i)"
       >
         {{ squad.name }}
       </li>
@@ -22,9 +22,8 @@
 
     <div *ngIf="!currentSquad">
       <br />
-      <p>Please click on a Tutorial...</p>
-      <button (click)="getStats()">Get Stats</button>
-      <button (click)="retrieveSquads()">Get Squads</button>
+      <p>Please click on a Squad...</p>
+      <button mat-raised-button color="primary" (click)="retrieveSquads()">Get Squads</button>
     </div>
   </div>
 </div>
