@@ -10,7 +10,7 @@ import { environment } from '../environments/environment';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AddTutorialComponent } from './components/add-tutorial/add-tutorial.component';
-import { TutorialDetailsComponent } from './components/tutorial-details/tutorial-details.component';
+import { TutorialDetailsComponent } from './components/squad-details/squad-details.component';
 import { HttpClientModule } from '@angular/common/http';
 import { SquadsListComponent } from './components/squads-list/squads-list.component';
 import { SquadRankingsComponent } from './components/squad-rankings/squad-rankings.component';

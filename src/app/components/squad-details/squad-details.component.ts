@@ -1,12 +1,12 @@
-import { StatsService } from './../../services/stats/stats.service';
+import { StatsService } from '../../services/stats/stats.service';
 import { Component, OnInit, Input, OnChanges, Output, EventEmitter } from '@angular/core';
 import Squad from 'src/app/models/squad.model';
 import { TutorialService } from 'src/app/services/tutorial/tutorial.service';
 
 @Component({
-  selector: 'app-tutorial-details',
-  templateUrl: './tutorial-details.component.html',
-  styleUrls: ['./tutorial-details.component.css']
+  selector: 'app-squad-details',
+  templateUrl: './squad-details.component.html',
+  styleUrls: ['./squad-details.component.css']
 })
 export class TutorialDetailsComponent implements OnInit, OnChanges {
 
@@ -28,11 +28,6 @@ export class TutorialDetailsComponent implements OnInit, OnChanges {
     this.message = '';
     this.currentSquad = { ...this.squad };
   }
-
-public async getTeamStats(team: string) {
-  const stats = await this.statsService.getTeamStats(team);
-  console.log(stats);
-}
 
   async updateTutorial(): Promise<void> {
     const data = {

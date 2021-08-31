@@ -1,6 +1,6 @@
 <div class="list row">
   <div class="col-md-6">
-    <h4>Tutorials List</h4>
+    <h4>Squads List</h4>
     <ul class="list-group">
       <li
         class="list-group-item"
@@ -14,10 +14,10 @@
   </div>
   <div class="col-md-6">
     <div *ngIf="currentSquad">
-      <app-tutorial-details
+      <app-squad-details
         (refreshList)="refreshList()"
         [squad]="currentSquad"
-      ></app-tutorial-details>
+      ></app-squad-details>
     </div>
 
     <div *ngIf="!currentSquad">
