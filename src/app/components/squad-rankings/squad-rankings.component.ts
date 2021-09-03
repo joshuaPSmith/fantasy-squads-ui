@@ -52,6 +52,8 @@ export class SquadRankingsComponent implements OnInit {
 
 
     this.squadStats = Object.values(rankSquads(prunedStats, this.squads as Squad[]));
+
+    console.log('SQUADSTATS', this.squadStats);
     this.statsVisible = true;
     this.rankingsVisible = false;
     this.step = 2;

@@ -13,6 +13,13 @@
             <ul class="list-group">
                 <li class="list-group-item" *ngFor="let category of squadStat.categoryTotals">
                     {{ category.categoryName }} ---- {{category.total}}
+                    <br>
+                    <ul>
+                        Teams Breakdown
+                        <li *ngFor="let teamObj of squadStat.categoryMap.get(category.categoryName)">
+                            {{teamObj.team}} - {{teamObj.statValue}}
+                        </li>
+                    </ul>
                 </li>
             </ul>
         </mat-expansion-panel>

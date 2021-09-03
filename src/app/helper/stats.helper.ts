@@ -32,16 +32,13 @@ export const rankSquads = (prunedStats: teamStat[], squads: Squad[]) => {
         categoryMap: Map<any, any>;
         categoryTotals: {string: number}
     }
-    // create squads object
-    // const squadsMap = new Map();
+
     let squadObject: any = {};
     
     squads.forEach(squad => {
-        // get map of teams
-        const teamMap = createSquadTeamsMap(squad);
-        // squadsMap.set(squad.name, {...squad, 'teamMap': teamMap, categoriesMap: new Map()})
+        // Create out object
         const squadName = squad.name;
-        squadObject = {...squadObject, [squadName]: { ...squad, 'teamMap': teamMap, 'categoryMap': new Map(), categoryTotals: []}}
+        squadObject = {...squadObject, [squadName]: { ...squad, 'categoryMap': new Map(), categoryTotals: []}}
     })
 
     const allTeamsMap = createTeamsMap(squads);
@@ -56,15 +53,12 @@ export const rankSquads = (prunedStats: teamStat[], squads: Squad[]) => {
             // get the value that we currently have for that category
             const tempMapValue = squadObject[squadAssociated].categoryMap.get(stat.statName);
 
-            // TODO reduce the size here
+            // TODO I have to check if the value is there but should be able to do that easier 
             if (tempMapValue) {
                 squadObject[squadAssociated].categoryMap.set(stat.statName, [...tempMapValue, stat])
             } else {
                 squadObject[squadAssociated].categoryMap.set(stat.statName, [stat])
             }
-            // Set the new category with the team as the key
-             
-            // squadObject[squadAssociated].categoryMap.set(stat.statName, {...tempMapValue, [stat.team]: stat}) 
         } 
     })
 
