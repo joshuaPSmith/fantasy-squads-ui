@@ -120,11 +120,23 @@ let categoryObject: any = [];
 categoryMap.forEach((value: Array<{squadName: string, total: number, rank: number}>, key) => {
     const sorted = value.sort(sort);
 
+    // let rank = 1;
+    // sorted.forEach(category => {
+    //     category.rank = rank;
+    //     rank++;
+    // });
+
     let rank = 1;
-    sorted.forEach(category => {
-        category.rank = rank;
+    for (let i = 0; i<sorted.length; i++) {
+        // check for ties
+        if (i > 0 && sorted[i].total === sorted[i-1].total) {
+            console.log('tie')
+            sorted[i].rank = sorted[i-1].rank;
+        } else {
+            sorted[i].rank = rank;
+        }
         rank++;
-    });
+    }
 
     categoryObject.push({categoryName: key, squads: sorted});
     categoryMap.set(key, sorted);

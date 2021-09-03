@@ -1,10 +1,9 @@
 import Squad from '../../models/squad.model';
-import { pruneStats } from './../../helper/stats.helper';
 import { teamStats } from './../../../assets/teamStats';
 import { Injectable } from '@angular/core';
 import { AngularFirestore, AngularFirestoreCollection } from '@angular/fire/firestore';
 import { AngularFireFunctions } from '@angular/fire/functions';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
+import { HttpClient } from '@angular/common/http';
 import { take } from 'rxjs/operators';
 
 @Injectable({
