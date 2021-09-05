@@ -1,10 +1,21 @@
-import { pruneStats, rankSquads, rankSquadsPerCategory } from './../../helper/stats.helper';
+import { pruneStats, rankSquads, rankSquadsPerCategory, getSquadStandings } from './../../helper/stats.helper';
 import Squad from 'src/app/models/squad.model';
 import { StatsService } from './../../services/stats/stats.service';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 
-
+// export enum categoryEnum {
+//   'totalYards' = 'Total Yards',
+//     'possessionTime' = 'Possession Time',
+//     'interceptionYards' = 'Interception Yards',
+//     'sacks' = 'Sacks',
+//     'fumblesRecovered' = 'Fumbles Recovered',
+//     'netPassingYards' = 'Net Passing Yards',
+//     'rushingYards' = 'Rushing Yards',
+//     'fourthDownConversions' = 'Fourth Down Conversions',
+//     'rushingTDs' = 'Rushing TDs',
+//     'passingTDs' = 'Passing TDs'
+// }
 @Component({
   selector: 'app-squad-rankings',
   templateUrl: './squad-rankings.component.html',
@@ -14,11 +25,25 @@ export class SquadRankingsComponent implements OnInit {
  public squads?: Squad[];
  public squadStats: any;
  public squadRankings: any;
+ public squadStandings: any;
  public statsVisible = false;
  public rankingsVisible = false;
  public loadingData = false;
  public step = 0;
 
+ public categoryEnum: any =  {
+  'totalYards': 'Total Yards',
+    'thirdDownConversions': 'Third Down Conversions',
+    'puntReturnYards': 'Punt Return Yards',
+    'sacks': 'Sacks',
+    'fumblesRecovered': 'Fumbles Recovered',
+    'netPassingYards': 'Net Passing Yards',
+    'rushingYards': 'Rushing Yards',
+    'turnovers': 'Turnovers',
+    'interceptions': 'Interceptions',
+    'rushingTDs': 'Rushing TDs',
+    'passingTDs': 'Passing TDs'
+}
   constructor(private statsService: StatsService) { }
 
   ngOnInit(): void {
@@ -53,7 +78,6 @@ export class SquadRankingsComponent implements OnInit {
 
     this.squadStats = Object.values(rankSquads(prunedStats, this.squads as Squad[]));
 
-    console.log('SQUADSTATS', this.squadStats);
     this.statsVisible = true;
     this.rankingsVisible = false;
     this.step = 2;
@@ -67,6 +91,14 @@ export class SquadRankingsComponent implements OnInit {
 
     this.rankingsVisible = true;
     this.statsVisible = false;
+    this.loadingData = false;
+  }
+
+  public getStandings() {
+    this.loadingData = true;
+
+    this.squadStandings = getSquadStandings(this.squadRankings);
+    console.log('##STANDINGS##', this.squadStandings);
     this.loadingData = false;
   }
 
