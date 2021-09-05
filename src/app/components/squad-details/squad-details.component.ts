@@ -10,11 +10,16 @@ import { TutorialService } from 'src/app/services/tutorial/tutorial.service';
 })
 export class TutorialDetailsComponent implements OnInit, OnChanges {
 
-  @Input() squad: Squad = {name: '', teamsList: []};
+  @Input() squad: Squad = {
+    name: '', 
+    teamsList: [], 
+    id: ''
+  };
   @Output() refreshList: EventEmitter<any> = new EventEmitter();
   public currentSquad: Squad = {
     name: '',
-    teamsList: []
+    teamsList: [],
+    id: ''
   };
   message = '';
 
