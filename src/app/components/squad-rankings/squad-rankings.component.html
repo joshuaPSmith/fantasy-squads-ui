@@ -3,6 +3,15 @@
 <button mat-raised-button color="accent" *ngIf="step === 2" (click)="getRankings()">Get Ranking</button>
 <button mat-raised-button color="accent" *ngIf="squadRankings?.length" (click)="getStandings()">Get Standings</button>
 </div>
+
+<div *ngIf="squadStandings?.length">
+    <ol>
+        <li *ngFor="let squadStanding of squadStandings">
+            {{squadStanding.squadName}} - {{squadStanding.squadStandings}}
+        </li>
+    </ol>
+</div>
+
 <div *ngIf="statsVisible">
     <mat-accordion>
         <mat-expansion-panel *ngFor="let squadStat of squadStats">
@@ -41,21 +50,6 @@
             </ul>
         </mat-expansion-panel>
     </mat-accordion>
-
-    <!-- <div  *ngFor="let squadRank of squadRankings">
-        {{squadRank.categoryName}}
-        <ul 
-        class="list-group"
-        >
-            <li
-              class="list-group-item"
-              *ngFor="let categoryRank of squadRank.squads"
-              
-            >
-            {{ categoryRank.rank }}. {{ categoryRank.squadName }} ---- {{categoryRank.total}}
-            </li>
-          </ul>
-    </div> -->
 </div>
 
 <div *ngIf="loadingData">

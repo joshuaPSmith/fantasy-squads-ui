@@ -174,7 +174,16 @@ export const getSquadStandings = (squadRankingsByCategory: Array<SquadRankByCate
                 )
         })
     })
-     return squadStandingsMap as Map<string, SquadStandingsRank>
+
+    // convert to an array for sorting and display
+    let squadStandingsArray: any = [];
+    squadStandingsMap.forEach((value, key) => {
+        squadStandingsArray.push(value);
+    });
+
+    squadStandingsArray.sort((a: SquadStandingsRank,b: SquadStandingsRank) => b.squadStandings-a.squadStandings);
+
+     return squadStandingsArray as Array<SquadStandingsRank>
 }
 
 

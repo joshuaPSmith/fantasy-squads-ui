@@ -98,7 +98,7 @@ export class SquadRankingsComponent implements OnInit {
     this.loadingData = true;
 
     this.squadStandings = getSquadStandings(this.squadRankings);
-    console.log('##STANDINGS##', this.squadStandings);
+    this.rankingsVisible = false;
     this.loadingData = false;
   }
 
