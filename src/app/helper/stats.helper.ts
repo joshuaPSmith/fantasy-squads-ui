@@ -37,10 +37,10 @@ statsToKeep.set('netPassingYards', true);
 statsToKeep.set('rushingYards', true);
 
 statsToKeep.set('thirdDownConversions', true);
-statsToKeep.set('turnovers', true);
+// statsToKeep.set('turnovers', true); This is turnovers committed
 statsToKeep.set('sacks', true);
 statsToKeep.set('fumblesRecovered', true);
-statsToKeep.set('interceptions', true);
+statsToKeep.set('passesIntercepted', true);
 statsToKeep.set('puntReturnYards', true);
 
 

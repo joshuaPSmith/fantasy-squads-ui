@@ -41,7 +41,7 @@ export class SquadRankingsComponent implements OnInit {
     'netPassingYards': 'Net Passing Yards',
     'rushingYards': 'Rushing Yards',
     'turnovers': 'Turnovers',
-    'interceptions': 'Interceptions',
+    'passesIntercepted': 'Passes Intercepted',
     'rushingTDs': 'Rushing TDs',
     'passingTDs': 'Passing TDs'
 }
