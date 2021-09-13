@@ -17,6 +17,7 @@ import { SquadRankingsComponent } from './components/squad-rankings/squad-rankin
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import {MatExpansionModule} from '@angular/material/expansion';
 import {MatButtonModule} from '@angular/material/button';
+import { StandingsComponent } from './components/standings/standings.component';
 
 
 
@@ -26,7 +27,8 @@ import {MatButtonModule} from '@angular/material/button';
     AddTutorialComponent,
     TutorialDetailsComponent,
     SquadsListComponent,
-    SquadRankingsComponent
+    SquadRankingsComponent,
+    StandingsComponent
   ],
   imports: [
     BrowserModule,

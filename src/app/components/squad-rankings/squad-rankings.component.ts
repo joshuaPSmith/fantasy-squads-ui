@@ -1,4 +1,5 @@
-import { pruneStats, rankSquads, rankSquadsPerCategory, getSquadStandings } from './../../helper/stats.helper';
+import { SquadsService } from './../../services/squads/squads.service';
+import { pruneStats, rankSquads, rankSquadsPerCategory, getSquadStandings, SquadRankByCategory, SquadStandingsRank, DetailedSquads } from './../../helper/stats.helper';
 import Squad from 'src/app/models/squad.model';
 import { StatsService } from './../../services/stats/stats.service';
 import { Component, OnInit } from '@angular/core';
@@ -23,9 +24,9 @@ import { map } from 'rxjs/operators';
 })
 export class SquadRankingsComponent implements OnInit {
  public squads?: Squad[];
- public squadStats: any;
- public squadRankings: any;
- public squadStandings: any;
+ public squadStats: DetailedSquads[] = [];
+ public squadRankings: SquadRankByCategory[] = [];
+ public squadStandings: SquadStandingsRank[] = [];
  public statsVisible = false;
  public rankingsVisible = false;
  public loadingData = false;
@@ -44,7 +45,7 @@ export class SquadRankingsComponent implements OnInit {
     'rushingTDs': 'Rushing TDs',
     'passingTDs': 'Passing TDs'
 }
-  constructor(private statsService: StatsService) { }
+  constructor(private statsService: StatsService, private squadsService: SquadsService) { }
 
   ngOnInit(): void {
     this.retrieveSquads();
@@ -52,7 +53,7 @@ export class SquadRankingsComponent implements OnInit {
 
   public retrieveSquads(): void {
     this.loadingData = true;
-    this.statsService.getAll().snapshotChanges().pipe(
+    this.squadsService.getAll().snapshotChanges().pipe(
       map(changes =>
         changes.map((c: { payload: { doc: { id: any; data: () => any; }; }; }) =>
           ({ id: c.payload.doc.id, ...c.payload.doc.data() })
@@ -70,7 +71,6 @@ export class SquadRankingsComponent implements OnInit {
     // I should have the teams now but need to confirm that
 
     // Get raw stats
-    // const allTeamStats = await this.statsService.getTeamStats('');
     const allTeamStats = await this.statsService.getALLStats();
 
     const prunedStats = pruneStats(allTeamStats, this.squads as Squad[])

@@ -1,3 +1,4 @@
+import { SquadsService } from './../../services/squads/squads.service';
 import { StatsService } from '../../services/stats/stats.service';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
@@ -15,7 +16,7 @@ export class SquadsListComponent implements OnInit {
   currentIndex = -1;
   title = '';
 
-  constructor(private statsService: StatsService) { }
+  constructor(private statsService: StatsService, private squadsService: SquadsService) { }
 
   ngOnInit(): void {
     // this.retrieveSquads();
@@ -28,7 +29,7 @@ export class SquadsListComponent implements OnInit {
   }
 
   retrieveSquads(): void {
-    this.statsService.getAll().snapshotChanges().pipe(
+    this.squadsService.getAll().snapshotChanges().pipe(
       map(changes =>
         changes.map((c: { payload: { doc: { id: any; data: () => any; }; }; }) =>
           ({ id: c.payload.doc.id, ...c.payload.doc.data() })

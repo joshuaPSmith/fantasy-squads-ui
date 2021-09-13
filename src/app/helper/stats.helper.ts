@@ -1,22 +1,47 @@
 import Squad from '../models/squad.model';
 import teamStat from "../models/stats.model";
 
-const statsToKeep = new Map()
-    statsToKeep.set('totalYards', true);
-    statsToKeep.set('rushingTDs', true);
-    statsToKeep.set('passingTDs', true);
-    statsToKeep.set('netPassingYards', true);
-    statsToKeep.set('rushingYards', true);
+export interface SquadRankByCategory {
+    categoryName: string,
+    squads: Array<
+        { squadID: string, squadName: string, rank: number, total: number }>
+}
 
-    statsToKeep.set('thirdDownConversions', true);
-    // statsToKeep.set('possessionTime', true);
-    // statsToKeep.set('interceptionYards', true);
-    statsToKeep.set('turnovers', true);
-    statsToKeep.set('sacks', true);
-    statsToKeep.set('fumblesRecovered', true);
-    statsToKeep.set('interceptions', true);
-    // statsToKeep.set('fourthDownConversions', true);
-    statsToKeep.set('puntReturnYards', true);
+export interface SquadStandingsRank {
+    squadName: string;
+    squadID: string;
+    squadStandings: number;
+}
+
+export interface DetailedSquads extends Squad {
+    categoryMap: Map<string, Array<teamStat>>,
+    categoryTotals: Array<
+        {
+            categoryName: string,
+            total: number
+        }
+    >
+}
+
+// export interface SquadObject extends Squad {
+//     teamMap: Map<any, any>;
+//     categoryMap: Map<any, any>;
+//     categoryTotals: { string: number }
+// }
+
+const statsToKeep = new Map()
+statsToKeep.set('totalYards', true);
+statsToKeep.set('rushingTDs', true);
+statsToKeep.set('passingTDs', true);
+statsToKeep.set('netPassingYards', true);
+statsToKeep.set('rushingYards', true);
+
+statsToKeep.set('thirdDownConversions', true);
+statsToKeep.set('turnovers', true);
+statsToKeep.set('sacks', true);
+statsToKeep.set('fumblesRecovered', true);
+statsToKeep.set('interceptions', true);
+statsToKeep.set('puntReturnYards', true);
 
 
 export const pruneStats = (rawStats: teamStat[], squads: Squad[]) => {
@@ -33,22 +58,16 @@ export const pruneStats = (rawStats: teamStat[], squads: Squad[]) => {
 
 // TODO get a better name
 export const rankSquads = (prunedStats: teamStat[], squads: Squad[]) => {
-    interface SquadObject extends Squad {
-        teamMap: Map<any, any>;
-        categoryMap: Map<any, any>;
-        categoryTotals: {string: number}
-    }
-
     let squadObject: any = {};
-    
+
     squads.forEach(squad => {
         // Create out object of the squads 
         const squadName = squad.name;
-        squadObject = {...squadObject, [squadName]: { ...squad, 'categoryMap': new Map(), categoryTotals: []}}
+        squadObject = { ...squadObject, [squadName]: { ...squad, 'categoryMap': new Map(), categoryTotals: [] } }
     })
 
     const allTeamsMap = createTeamsMap(squads);
-    
+
     // put each stat with the correct squad in a map keyed by the stat name
     prunedStats.forEach(stat => {
         // find out what squad the team that the stat is associated is on
@@ -65,7 +84,7 @@ export const rankSquads = (prunedStats: teamStat[], squads: Squad[]) => {
             } else {
                 squadObject[squadAssociated].categoryMap.set(stat.statName, [stat])
             }
-        } 
+        }
     })
 
     // combine the stats to get totals
@@ -73,84 +92,60 @@ export const rankSquads = (prunedStats: teamStat[], squads: Squad[]) => {
     // Go through each key (key will be squad names)
     keys.forEach(key => {
         // Go through each category and add up the values
-        squadObject[key].categoryMap.forEach((value:Array<teamStat>, categoryKey:string) => {
+        squadObject[key].categoryMap.forEach((value: Array<teamStat>, categoryKey: string) => {
             // Now go through each category and add values
             const reducer = (accumulator: number, currentValue: teamStat) => accumulator + currentValue.statValue;
             const categoryTotal = value.reduce(reducer, 0)
 
             // Copy whats there and add the new
-            squadObject[key].categoryTotals = [...squadObject[key].categoryTotals, {categoryName: categoryKey, total: categoryTotal}];
+            squadObject[key].categoryTotals = [...squadObject[key].categoryTotals, { categoryName: categoryKey, total: categoryTotal }];
         });
     })
 
     // TODO return less data and as an object
-    return squadObject as SquadObject;
-}
-
-interface DetailedSquads extends Squad {
-    categoryMap: Map<string, Array<teamStat>>,
-    categoryTotals: Array<
-    {
-        categoryName: string, 
-        total: number}
-        >
+    return squadObject as DetailedSquads;
 }
 
 export const rankSquadsPerCategory = (detailedSquads: Array<DetailedSquads>) => {
-// create a map for the categories
-const categoryMap = new Map();
+    // create a map for the categories
+    const categoryMap = new Map();
 
-// go through each squad
-detailedSquads.forEach(squad => {
-    squad.categoryTotals.forEach(categoryTotal => {
-        // add the totals to the map with the key as the category name (without losing the previous values)
-        const tempData = categoryMap.has(categoryTotal.categoryName) ? categoryMap.get(categoryTotal.categoryName) : [];
-        categoryMap.set(categoryTotal.categoryName, [...tempData, {'squadID': squad.id, 'squadName': squad.name, 'total': categoryTotal.total, 'rank': 0}]);
-    })
-});
+    // go through each squad
+    detailedSquads.forEach(squad => {
+        squad.categoryTotals.forEach(categoryTotal => {
+            // add the totals to the map with the key as the category name (without losing the previous values)
+            const tempData = categoryMap.has(categoryTotal.categoryName) ? categoryMap.get(categoryTotal.categoryName) : [];
+            categoryMap.set(categoryTotal.categoryName, [...tempData, { 'squadID': squad.id, 'squadName': squad.name, 'total': categoryTotal.total, 'rank': 0 }]);
+        })
+    });
 
-// TODO I am doing this just to make it an array. i need to figure out how to iterate over an object better.
-let squadRankings: any = [];
-categoryMap.forEach((value: Array<{squadName: string, total: number, rank: number, tieValue: number}>, key) => {
-    const sorted = value.sort(sort);
+    // TODO I am doing this just to make it an array. i need to figure out how to iterate over an object better.
+    let squadRankings: any = [];
+    categoryMap.forEach((value: Array<{ squadName: string, total: number, rank: number, tieValue: number }>, key) => {
+        const sorted = value.sort(sort);
 
-    let rank = 1;
-    for (let i = 0; i<sorted.length; i++) {
-        // check for ties
-        if (i > 0 && sorted[i].total === sorted[i-1].total) {
-            sorted[i].rank = sorted[i-1].rank;
-            sorted[i].tieValue = sorted[i].tieValue++ // still needs work. I need the tieValue to be the same for each that is tied
-        } else {
-            sorted[i].rank = rank;
-            sorted[i].tieValue = 1;
+        let rank = 1;
+        for (let i = 0; i < sorted.length; i++) {
+            // check for ties
+            if (i > 0 && sorted[i].total === sorted[i - 1].total) {
+                sorted[i].rank = sorted[i - 1].rank;
+                sorted[i].tieValue = sorted[i].tieValue++ // still needs work. I need the tieValue to be the same for each that is tied
+            } else {
+                sorted[i].rank = rank;
+                sorted[i].tieValue = 1;
+            }
+            rank++;
         }
-        rank++;
-    }
 
-    squadRankings.push({categoryName: key, squads: sorted});
-    categoryMap.set(key, sorted);
-})
+        squadRankings.push({ categoryName: key, squads: sorted });
+        categoryMap.set(key, sorted);
+    })
 
-return squadRankings as SquadRankByCategory[];
+    return squadRankings as SquadRankByCategory[];
 }
 
-function sort(a: {squadName: string, total: number, rank: number}, b: {squadName: string, total: number, rank: number}) {
-     return b.total - a.total;
-  }
-
-  interface SquadRankByCategory {
-    categoryName: string, 
-    squads: Array<
-    {squadID: string, squadName: string, rank: number, total: number}>    
-  }
-
-  interface SquadStandingsRank {
-      squadName: string;
-      squadID: string;
-      squadStandings: number;
-  }
 export const getSquadStandings = (squadRankingsByCategory: Array<SquadRankByCategory>) => {
-    let squadStandingsMap: Map<string,SquadStandingsRank> = new Map();
+    let squadStandingsMap: Map<string, SquadStandingsRank> = new Map();
 
     // Go through each category
     squadRankingsByCategory.forEach(squadRank => {
@@ -163,15 +158,15 @@ export const getSquadStandings = (squadRankingsByCategory: Array<SquadRankByCate
 
             // Add to the value if its there or set the first one
             const newSquadStandings = tempValue ? tempValue.squadStandings + currentCategoryStanding : currentCategoryStanding
-     
+
             squadStandingsMap.set(
-                squad.squadName, 
+                squad.squadName,
                 {
-                    squadName: squad.squadName, 
-                    squadID: squad.squadID, 
+                    squadName: squad.squadName,
+                    squadID: squad.squadID,
                     squadStandings: newSquadStandings
                 }
-                )
+            )
         })
     })
 
@@ -181,14 +176,13 @@ export const getSquadStandings = (squadRankingsByCategory: Array<SquadRankByCate
         squadStandingsArray.push(value);
     });
 
-    squadStandingsArray.sort((a: SquadStandingsRank,b: SquadStandingsRank) => b.squadStandings-a.squadStandings);
+    squadStandingsArray.sort((a: SquadStandingsRank, b: SquadStandingsRank) => b.squadStandings - a.squadStandings);
 
-     return squadStandingsArray as Array<SquadStandingsRank>
+    return squadStandingsArray as Array<SquadStandingsRank>
 }
 
-
 // Creates a map for ALL teams for ALL Squads with the squad name as the value and team as the key
-const createTeamsMap = (squads: Squad[]): Map<string, string> => {
+export const createTeamsMap = (squads: Squad[]): Map<string, string> => {
     const teamMap: Map<string, string> = new Map();
 
     squads.forEach(squad => {
@@ -198,11 +192,6 @@ const createTeamsMap = (squads: Squad[]): Map<string, string> => {
     return teamMap;
 }
 
-// Creates a map for a s
-const createSquadTeamsMap = (squad: Squad): Map<string, string> => {
-    const teamMap: Map<string, string> = new Map();
-
-    squad.teamsList.forEach(team => teamMap.set(team, team))
-
-    return teamMap;
+function sort(a: { squadName: string, total: number, rank: number }, b: { squadName: string, total: number, rank: number }) {
+    return b.total - a.total;
 }
