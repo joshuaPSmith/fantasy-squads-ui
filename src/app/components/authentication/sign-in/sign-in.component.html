@@ -1,0 +1,40 @@
+<app-form-wrapper>
+  <h2 title>Login Form</h2>
+  <mat-form-field class="half-width-input" appearance="fill">
+    <mat-label>Username</mat-label>
+    <input matInput placeholder="Username" #userName required>
+  </mat-form-field>
+
+  <mat-form-field class="half-width-input" appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput type="password" placeholder="Password" #userPassword required>
+  </mat-form-field>
+
+
+  <!-- Calling signIn Api from AuthService -->
+  <div>
+    <button mat-raised-button color="primary" (click)="authService.signIn(userName.value, userPassword.value)">
+      Log in
+    </button>
+  </div>
+
+  <div class="formGroup">
+    <span class="or"><span class="orInner">Or</span></span>
+  </div>
+
+  <!-- Calling googleAuth Api from AuthService -->
+  <div class="formGroup">
+    <button mat-raised-button color="accent" (click)="authService.googleAuth()">
+      <!-- <mat-icon>google</mat-icon> -->
+      Log in with Google
+    </button>
+  </div>
+
+  <div class="forgotPassword">
+    <a routerLink="/forgot-password">Forgot Password?</a>
+  </div>
+
+  <div class="redirectToLogin">
+    <span>Don't have an account?<a routerLink="/register-user"> Sign Up</a></span>
+  </div>
+</app-form-wrapper>

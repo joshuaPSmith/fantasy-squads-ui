@@ -16,7 +16,7 @@ export class SquadsListComponent implements OnInit {
   currentIndex = -1;
   title = '';
 
-  constructor(private statsService: StatsService, private squadsService: SquadsService) { }
+  constructor(private squadsService: SquadsService) { }
 
   ngOnInit(): void {
     // this.retrieveSquads();
