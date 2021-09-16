@@ -17,8 +17,8 @@ public menuList = [
     href:'rankings'
   },
   {
-    title: 'Standings',
-    href:'standings'
+    title: 'Games',
+    href:'games'
   }
 ]
   constructor(public authService: AuthService) {}

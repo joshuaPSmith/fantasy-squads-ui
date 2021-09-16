@@ -1,0 +1,76 @@
+<div *ngIf="loadingData;else template">
+    <div class="spinner-grow text-primary" role="status">
+    </div>
+    <div class="spinner-grow text-secondary" role="status">
+    </div>
+    <div class="spinner-grow text-success" role="status">
+    </div>
+    <div class="spinner-grow text-danger" role="status">
+    </div>
+    <div class="spinner-grow text-warning" role="status">
+    </div>
+    <div class="spinner-grow text-info" role="status">
+    </div>
+    <div class="spinner-grow text-light" role="status">
+    </div>
+    <div class="spinner-grow text-dark" role="status">
+    </div>
+</div>
+
+<ng-template #template>
+
+      <mat-selection-list [multiple]="false">
+        <mat-list-option *ngFor="let squad of squads" [value]="squad" (click)="getGamesForSquad(squad.name)">
+          {{squad.name}}
+        </mat-list-option>
+      </mat-selection-list>
+
+      <mat-form-field appearance="fill">
+        <mat-label>Filter by week</mat-label>
+        <mat-select [(value)]="selectedWeek">
+            <mat-option value="all" (click)="showAllWeeks()">All</mat-option>
+          <mat-option *ngFor="let week of weeks" [value]="week" (click)="filterGamesByWeek(week)">
+            {{week}}
+          </mat-option>
+        </mat-select>
+      </mat-form-field>
+
+      <table mat-table [dataSource]="gamesToShowTable" class="mat-elevation-z8">
+
+        <!--- Note that these columns can be defined in any order.
+              The actual rendered columns are set as a property on the row definition" -->
+      
+        <!-- Position Column -->
+        <ng-container matColumnDef="week">
+          <th mat-header-cell *matHeaderCellDef> Week </th>
+          <td mat-cell *matCellDef="let game"> {{game.week}} </td>
+        </ng-container>
+      
+        <!-- Name Column -->
+        <ng-container matColumnDef="homeTeam">
+          <th mat-header-cell *matHeaderCellDef> Home Team </th>
+          <td mat-cell *matCellDef="let game"> {{game.homeTeam}} </td>
+        </ng-container>
+      
+        <!-- Weight Column -->
+        <ng-container matColumnDef="homePoints">
+          <th mat-header-cell *matHeaderCellDef> Home Points </th>
+          <td mat-cell *matCellDef="let game"> {{game.homePoints}} </td>
+        </ng-container>
+      
+        <!-- Symbol Column -->
+        <ng-container matColumnDef="awayTeam">
+          <th mat-header-cell *matHeaderCellDef> Away Team </th>
+          <td mat-cell *matCellDef="let game"> {{game.awayTeam}} </td>
+        </ng-container>
+
+        <ng-container matColumnDef="awayPoints">
+          <th mat-header-cell *matHeaderCellDef> Away Points </th>
+          <td mat-cell *matCellDef="let game"> {{game.awayPoints}} </td>
+        </ng-container>
+      
+        <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+        <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
+      </table>
+
+</ng-template>

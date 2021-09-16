@@ -22,6 +22,10 @@ import { MatInputModule } from '@angular/material/input';
 import { MatListModule } from '@angular/material/list';
 import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
+import { MatTableModule } from '@angular/material/table';
+import { MatSelectModule } from '@angular/material/select';
+
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 
@@ -31,6 +35,7 @@ import { SignUpComponent } from './components/authentication/sign-up/sign-up.com
 import { ForgotPasswordComponent } from './components/authentication/forgot-password/forgot-password.component';
 import { VerifyEmailComponent } from './components/authentication/verify-email/verify-email.component';
 import { FormWrapperComponent } from './components/authentication/form-wrapper/form-wrapper.component';
+import { SquadGamesComponent } from './components/squad-games/squad-games.component';
 
 
 
@@ -46,7 +51,8 @@ import { FormWrapperComponent } from './components/authentication/form-wrapper/f
     SignUpComponent,
     ForgotPasswordComponent,
     VerifyEmailComponent,
-    FormWrapperComponent
+    FormWrapperComponent,
+    SquadGamesComponent
   ],
   imports: [
     BrowserModule,
@@ -62,7 +68,9 @@ import { FormWrapperComponent } from './components/authentication/form-wrapper/f
     MatButtonModule,
     MatListModule,
     MatToolbarModule,
+    MatTableModule,
     MatCardModule,
+    MatSelectModule,
     FlexLayoutModule,
     BrowserAnimationsModule, // for firestore
   ],

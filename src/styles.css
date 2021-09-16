@@ -5,7 +5,6 @@ html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
 
 /* Forms */
-.half-width-input {
-    width: 50%;
-    margin-right: 15px;
+.full-width-input {
+    width: 100%;
   }

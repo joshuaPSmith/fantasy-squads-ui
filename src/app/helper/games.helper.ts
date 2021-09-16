@@ -2,61 +2,74 @@ interface RawGameInformation {
     "id": number,
     "season": number,
     "week": number,
-    "season_type": string,
-    "start_date": string,
-    "start_time_tbd": boolean,
-    "neutral_site": boolean,
-    "conference_game": boolean,
+    "seasonType": string,
+    "startDate": string,
+    "startTimeTbd": boolean,
+    "neutralSite": boolean,
+    "conferenceGame": boolean,
     "attendance": number,
-    "venue_id": number,
+    "venueId": number,
     "venue": string,
-    "home_id": number,
-    "home_team": string,
-    "home_conference": string,
-    "home_points": number,
-    "home_line_scores": Array<number>,
-    "home_post_win_prob": number,
-    "away_id": number,
-    "away_team": string,
-    "away_conference": string,
-    "away_points": number,
-    "away_line_scores": Array<number>,
-    "away_post_win_prob": number,
-    "excitement_index": number,
+    "homeId": number,
+    "homeTeam": string,
+    "homeConference": string,
+    "homePoints": number,
+    "homeLineScores": Array<number>,
+    "homePostWinProb": number,
+    "awayId": number,
+    "awayTeam": string,
+    "awayConference": string,
+    "awayPoints": number,
+    "awayLineScores": Array<number>,
+    "awayPostWinProb": number,
+    "excitementIndex": number,
     "highlights": string,
     "notes": string
 }
 
-interface GameInformation {
+export interface GameInformation {
     "season": number,
     "week": number,
-    "season_type": string,
-    "start_date": string,
-    "conference_game": boolean,
-    "home_team": string,
-    "home_points": number,
-    "away_team": string,
-    "away_points": number,
+    "seasonType": string,
+    "startDate": string,
+    "conferenceGame": boolean,
+    "homeTeam": string,
+    "homePoints": number,
+    "awayTeam": string,
+    "awayPoints": number,
+    "squad": string
 }
 
 
-const pruneGames = (gameInformation: Array<RawGameInformation>, squadsMap: Map<string, string>): Array<GameInformation> => {
+export const pruneGames = (gameInformation: Array<RawGameInformation>, squadsTeamsMap: Map<string, string>): Array<GameInformation> => {
     return gameInformation.filter(game => {
-        if (squadsMap.has(game.away_team) || squadsMap.has(game.home_team)) {
-            return {
-                "season": game.season,
-                "week": game.week,
-                "season_type": game.season_type,
-                "start_date": game.start_date,
-                "conference_game": game.conference_game,
-                "home_team": game.home_team,
-                "home_points": game.home_points,
-                "away_team": game.away_team,
-                "away_points": game.away_points,
-
-            }
+        if (squadsTeamsMap.has(game.awayTeam) || squadsTeamsMap.has(game.homeTeam)) {
+            return true;
         } else {
             return false;
         }
-    })
+    }).map(rawGame => {
+        const squad = squadsTeamsMap.has(rawGame.homeTeam) ? squadsTeamsMap.get(rawGame.homeTeam) : squadsTeamsMap.get(rawGame.awayTeam);
+
+        return {
+            "season": rawGame.season,
+            "week": rawGame.week,
+            "seasonType": rawGame.seasonType,
+            "startDate": rawGame.startDate,
+            "conferenceGame": rawGame.conferenceGame,
+            "homeTeam": rawGame.homeTeam,
+            "homePoints": rawGame.homePoints,
+            "awayTeam": rawGame.awayTeam,
+            "awayPoints": rawGame.awayPoints,
+            "squad": squad as string
+        }
+    });
+}
+
+export const getGamesPerSquad = (games: GameInformation[], squad: string) => {
+    return games.filter(game => game.squad === squad);
+}
+
+export const getGamesPerWeek = (games: GameInformation[], week: number) => {
+    return games.filter(game => game.week === week);
 }
