@@ -1,3 +1,4 @@
+import { SquadGamesComponent } from './components/squad-games/squad-games.component';
 import { AuthGuard } from './guards/auth.guard';
 import { VerifyEmailComponent } from './components/authentication/verify-email/verify-email.component';
 import { ForgotPasswordComponent } from './components/authentication/forgot-password/forgot-password.component';
@@ -18,7 +19,8 @@ const routes: Routes = [
   { path: 'verify-email-address', component: VerifyEmailComponent },
   { path: 'squads', component: SquadsListComponent, canActivate: [AuthGuard] },
   { path: 'standings', component: StandingsComponent, canActivate: [AuthGuard] },
-  { path: 'rankings', component: SquadRankingsComponent, canActivate: [AuthGuard] }
+  { path: 'rankings', component: SquadRankingsComponent, canActivate: [AuthGuard] },
+  { path: 'games', component: SquadGamesComponent, canActivate: [AuthGuard] }
 ];
 
 @NgModule({
