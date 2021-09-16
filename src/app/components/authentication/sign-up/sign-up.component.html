@@ -1,0 +1,39 @@
+ 
+
+
+
+
+<app-form-wrapper>
+  <h2 title>Sign Up</h2>
+  <mat-form-field class="half-width-input" appearance="fill">
+    <mat-label>Username</mat-label>
+    <input matInput placeholder="Username" #userName required>
+  </mat-form-field>
+
+  <mat-form-field class="half-width-input" appearance="fill">
+    <mat-label>Password</mat-label>
+    <input matInput type="password" placeholder="Password" #userPassword required>
+  </mat-form-field>
+
+  <div class="formGroup">
+    <button mat-raised-button color="primary" (click)="authService.signUp(userName.value, userPassword.value)">
+      Sign Up
+    </button>
+  </div>
+
+  <div class="formGroup">
+    <span class="or"><span class="orInner">Or</span></span>
+  </div>
+
+  <!-- Continue with Google -->
+  <div class="formGroup">
+    <button mat-raised-button color="primary" (click)="authService.googleAuth()">
+      Continue with Google
+    </button>
+  </div>
+
+
+<div class="redirectToLogin">
+  <span>Already have an account? <a class="redirect" routerLink="/sign-in">Log In</a></span>
+</div>
+</app-form-wrapper>

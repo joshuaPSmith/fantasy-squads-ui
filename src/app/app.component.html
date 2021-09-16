@@ -2,16 +2,17 @@
   <nav class="navbar navbar-expand navbar-dark bg-dark">
     <a href="#" class="navbar-brand">Fantasy Squads</a>
     <div class="navbar-nav mr-auto">
-      <li class="nav-item">
-        <a routerLink="squads" class="nav-link">Squads</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="rankings" class="nav-link">Ranking</a>
-      </li>
-      <li class="nav-item">
-        <a routerLink="standings" class="nav-link">Standings</a>
+      <li *ngFor="let item of menuList" class="nav-item">
+        <a [routerLink]="item.href" class = "nav-link" routerLinkActive="router-link-active">
+          {{ item.title }}
+        </a>
       </li>
     </div>
+    <ul class="navbar-nav ml-auto" *ngIf="authService.isLoggedIn">
+      <li class="nav-item" (click)="authService.signOut()">
+        <a class="nav-link">Sign Out</a>
+      </li>
+    </ul>
   </nav>
 
   <div class="container mt-3">

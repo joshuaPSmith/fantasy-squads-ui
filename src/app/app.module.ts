@@ -15,9 +15,22 @@ import { HttpClientModule } from '@angular/common/http';
 import { SquadsListComponent } from './components/squads-list/squads-list.component';
 import { SquadRankingsComponent } from './components/squad-rankings/squad-rankings.component';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
-import {MatExpansionModule} from '@angular/material/expansion';
-import {MatButtonModule} from '@angular/material/button';
+import { MatExpansionModule } from '@angular/material/expansion';
+import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
+import { MatListModule } from '@angular/material/list';
+import { MatToolbarModule } from '@angular/material/toolbar';
+import { MatCardModule } from '@angular/material/card';
+import { FlexLayoutModule } from '@angular/flex-layout';
+
+
 import { StandingsComponent } from './components/standings/standings.component';
+import { SignInComponent } from './components/authentication/sign-in/sign-in.component';
+import { SignUpComponent } from './components/authentication/sign-up/sign-up.component';
+import { ForgotPasswordComponent } from './components/authentication/forgot-password/forgot-password.component';
+import { VerifyEmailComponent } from './components/authentication/verify-email/verify-email.component';
+import { FormWrapperComponent } from './components/authentication/form-wrapper/form-wrapper.component';
 
 
 
@@ -28,7 +41,12 @@ import { StandingsComponent } from './components/standings/standings.component';
     TutorialDetailsComponent,
     SquadsListComponent,
     SquadRankingsComponent,
-    StandingsComponent
+    StandingsComponent,
+    SignInComponent,
+    SignUpComponent,
+    ForgotPasswordComponent,
+    VerifyEmailComponent,
+    FormWrapperComponent
   ],
   imports: [
     BrowserModule,
@@ -39,7 +57,13 @@ import { StandingsComponent } from './components/standings/standings.component';
     AngularFireFunctionsModule,
     AngularFirestoreModule,
     MatExpansionModule,
+    MatIconModule,
+    MatInputModule,
     MatButtonModule,
+    MatListModule,
+    MatToolbarModule,
+    MatCardModule,
+    FlexLayoutModule,
     BrowserAnimationsModule, // for firestore
   ],
   providers: [],

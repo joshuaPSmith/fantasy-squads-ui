@@ -1,3 +1,4 @@
+import { AuthService } from './services/authentication/authentication.service';
 import { Component } from '@angular/core';
 
 @Component({
@@ -6,5 +7,20 @@ import { Component } from '@angular/core';
   styleUrls: ['./app.component.css']
 })
 export class AppComponent {
+public menuList = [
+  {
+    title: 'Squads',
+    href:'squads'
+  }, 
+  {
+    title: 'Rankings',
+    href:'rankings'
+  },
+  {
+    title: 'Standings',
+    href:'standings'
+  }
+]
+  constructor(public authService: AuthService) {}
   title = 'Fantasy Squads!';
 }

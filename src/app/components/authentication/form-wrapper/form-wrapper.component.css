@@ -1,0 +1,10 @@
+mat-card {
+    padding: 0px;
+    min-width: 600px;
+}
+
+mat-card-content {
+    gap: 15px;
+    padding: 20px 0px;
+}
+
