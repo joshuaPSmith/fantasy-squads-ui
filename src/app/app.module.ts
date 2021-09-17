@@ -24,6 +24,7 @@ import { MatToolbarModule } from '@angular/material/toolbar';
 import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
+import { MatSnackBarModule } from '@angular/material/snack-bar';
 
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -71,6 +72,7 @@ import { SquadGamesComponent } from './components/squad-games/squad-games.compon
     MatTableModule,
     MatCardModule,
     MatSelectModule,
+    MatSnackBarModule,
     FlexLayoutModule,
     BrowserAnimationsModule, // for firestore
   ],

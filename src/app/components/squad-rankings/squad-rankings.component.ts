@@ -4,6 +4,7 @@ import Squad from 'src/app/models/squad.model';
 import { StatsService } from './../../services/stats/stats.service';
 import { Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 // export enum categoryEnum {
 //   'totalYards' = 'Total Yards',
@@ -23,17 +24,17 @@ import { map } from 'rxjs/operators';
   styleUrls: ['./squad-rankings.component.css']
 })
 export class SquadRankingsComponent implements OnInit {
- public squads?: Squad[];
- public squadStats: DetailedSquads[] = [];
- public squadRankings: SquadRankByCategory[] = [];
- public squadStandings: SquadStandingsRank[] = [];
- public statsVisible = false;
- public rankingsVisible = false;
- public loadingData = false;
- public step = 0;
+  public squads?: Squad[];
+  public squadStats: DetailedSquads[] = [];
+  public squadRankings: SquadRankByCategory[] = [];
+  public squadStandings: SquadStandingsRank[] = [];
+  public statsVisible = false;
+  public rankingsVisible = false;
+  public loadingData = false;
+  public step = 0;
 
- public categoryEnum: any =  {
-  'totalYards': 'Total Yards',
+  public categoryEnum: any = {
+    'totalYards': 'Total Yards',
     'thirdDownConversions': 'Third Down Conversions',
     'puntReturnYards': 'Punt Return Yards',
     'sacks': 'Sacks',
@@ -44,8 +45,11 @@ export class SquadRankingsComponent implements OnInit {
     'passesIntercepted': 'Passes Intercepted',
     'rushingTDs': 'Rushing TDs',
     'passingTDs': 'Passing TDs'
-}
-  constructor(private statsService: StatsService, private squadsService: SquadsService) { }
+  }
+  constructor(
+    private statsService: StatsService,
+    private squadsService: SquadsService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.retrieveSquads();
@@ -70,17 +74,22 @@ export class SquadRankingsComponent implements OnInit {
     this.loadingData = true;
     // I should have the teams now but need to confirm that
 
-    // Get raw stats
-    const allTeamStats = await this.statsService.getALLStats();
+    try {
+      // Get raw stats
+      const allTeamStats = await this.statsService.getALLStats();
 
-    const prunedStats = pruneStats(allTeamStats, this.squads as Squad[])
+      const prunedStats = pruneStats(allTeamStats, this.squads as Squad[])
 
 
-    this.squadStats = Object.values(rankSquads(prunedStats, this.squads as Squad[]));
+      this.squadStats = Object.values(rankSquads(prunedStats, this.squads as Squad[]));
 
-    this.statsVisible = true;
-    this.rankingsVisible = false;
-    this.step = 2;
+      this.statsVisible = true;
+      this.rankingsVisible = false;
+      this.step = 2;
+    } catch (error) {
+      this.snackBar.open('Sorry looks like something is not loading', 'close');
+    }
+
     this.loadingData = false;
   }
 

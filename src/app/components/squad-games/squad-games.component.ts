@@ -6,6 +6,7 @@ import { pruneGames, getGamesPerSquad, GameInformation, getGamesPerWeek } from '
 import { GamesService } from './../../services/games/games.service';
 import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatTable } from '@angular/material/table';
+import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-squad-games',
@@ -26,12 +27,15 @@ export class SquadGamesComponent implements OnInit {
   ];
   public currentSquadGames: GameInformation[] = [];
   public gamesToShowTable: GameInformation[] = [];
-  public weeks = [ ...Array(13).keys() ].map( i => i+1);
+  public weeks = [...Array(13).keys()].map(i => i + 1);
   public selectedWeek = "all";
   @ViewChild(MatTable) public table: MatTable<GameInformation> | undefined;
 
 
-  constructor(private gamesService: GamesService, private squadsService: SquadsService) { }
+  constructor(
+    private gamesService: GamesService,
+    private squadsService: SquadsService,
+    private snackBar: MatSnackBar) { }
 
   ngOnInit(): void {
     this.retrieveSquads();
@@ -53,12 +57,17 @@ export class SquadGamesComponent implements OnInit {
 
   public async getGames() {
     this.loadingData = true;
-    const rawGames = await this.gamesService.geAllGames();
+    try {
+      const rawGames = await this.gamesService.geAllGames();
 
-    this.prunnedGames = pruneGames(rawGames, createTeamsMap(this.squads));
+      this.prunnedGames = pruneGames(rawGames, createTeamsMap(this.squads));
+    } catch (error) {
+      this.snackBar.open('Something didnt load correctly', 'close');
+    }
+
 
     this.loadingData = false;
-  } 
+  }
 
   public getGamesForSquad(squadName: string) {
     // get the games for this team
