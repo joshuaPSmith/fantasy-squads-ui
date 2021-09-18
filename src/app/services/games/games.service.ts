@@ -17,6 +17,7 @@ export class GamesService {
       const callable = this.fireFunctions.httpsCallable('getAllGames');
       try {
           const allGames = callable({}).toPromise();
+          
           return allGames;
       } catch (error) {
           console.error(error);

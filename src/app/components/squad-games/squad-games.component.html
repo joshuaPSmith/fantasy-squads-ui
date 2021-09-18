@@ -39,25 +39,25 @@
 
         <!--- Note that these columns can be defined in any order.
               The actual rendered columns are set as a property on the row definition" -->
-      
+
         <!-- Position Column -->
         <ng-container matColumnDef="week">
           <th mat-header-cell *matHeaderCellDef> Week </th>
           <td mat-cell *matCellDef="let game"> {{game.week}} </td>
         </ng-container>
-      
+
         <!-- Name Column -->
         <ng-container matColumnDef="homeTeam">
           <th mat-header-cell *matHeaderCellDef> Home Team </th>
           <td mat-cell *matCellDef="let game"> {{game.homeTeam}} </td>
         </ng-container>
-      
+
         <!-- Weight Column -->
         <ng-container matColumnDef="homePoints">
           <th mat-header-cell *matHeaderCellDef> Home Points </th>
           <td mat-cell *matCellDef="let game"> {{game.homePoints}} </td>
         </ng-container>
-      
+
         <!-- Symbol Column -->
         <ng-container matColumnDef="awayTeam">
           <th mat-header-cell *matHeaderCellDef> Away Team </th>
@@ -68,7 +68,7 @@
           <th mat-header-cell *matHeaderCellDef> Away Points </th>
           <td mat-cell *matCellDef="let game"> {{game.awayPoints}} </td>
         </ng-container>
-      
+
         <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
         <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>
       </table>
