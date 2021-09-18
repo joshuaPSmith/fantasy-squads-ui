@@ -37,6 +37,7 @@ import { ForgotPasswordComponent } from './components/authentication/forgot-pass
 import { VerifyEmailComponent } from './components/authentication/verify-email/verify-email.component';
 import { FormWrapperComponent } from './components/authentication/form-wrapper/form-wrapper.component';
 import { SquadGamesComponent } from './components/squad-games/squad-games.component';
+import { ServiceWorkerModule } from '@angular/service-worker';
 
 
 
@@ -74,7 +75,13 @@ import { SquadGamesComponent } from './components/squad-games/squad-games.compon
     MatSelectModule,
     MatSnackBarModule,
     FlexLayoutModule,
-    BrowserAnimationsModule, // for firestore
+    BrowserAnimationsModule,
+    ServiceWorkerModule.register('ngsw-worker.js', {
+      enabled: environment.production,
+      // Register the ServiceWorker as soon as the app is stable
+      // or after 30 seconds (whichever comes first).
+      registrationStrategy: 'registerWhenStable:30000'
+    }), // for firestore
   ],
   providers: [],
   bootstrap: [AppComponent]
