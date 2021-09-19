@@ -1,6 +1,6 @@
 <div>
   <nav class="navbar navbar-expand navbar-dark bg-dark">
-    <a href="#" class="navbar-brand">Fantasy Squads</a>
+    <a href="#" class="navbar-brand">{{title}}</a>
     <div class="navbar-nav mr-auto">
       <li *ngFor="let item of menuList" class="nav-item">
         <a [routerLink]="item.href" class = "nav-link" routerLinkActive="router-link-active">
@@ -16,7 +16,6 @@
   </nav>
 
   <div class="container mt-3">
-    <h2>{{ title }}</h2>
     <router-outlet></router-outlet>
   </div>
 </div>

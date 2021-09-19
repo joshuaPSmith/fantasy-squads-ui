@@ -11,7 +11,7 @@ public menuList = [
   {
     title: 'Squads',
     href:'squads'
-  }, 
+  },
   {
     title: 'Rankings',
     href:'rankings'
@@ -22,5 +22,5 @@ public menuList = [
   }
 ]
   constructor(public authService: AuthService) {}
-  title = 'Fantasy Squads!';
+  title = 'Squad Blitz!';
 }
