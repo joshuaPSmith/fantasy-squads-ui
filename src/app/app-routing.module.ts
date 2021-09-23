@@ -13,19 +13,19 @@ import { SquadsListComponent } from './components/squads-list/squads-list.compon
 import { SquadRankingsComponent } from './components/squad-rankings/squad-rankings.component';
 
 const routes: Routes = [
-  { path: '', redirectTo: '/home', pathMatch: 'full' },
+  // { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
   { path: 'register-user', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
   { path: 'verify-email-address', component: VerifyEmailComponent },
   {
-    path: 'home', component: HomeComponent, canActivate: [AuthGuard],
+    path: '', component: HomeComponent, canActivate: [AuthGuard],
     children: [
       { path: '', redirectTo: '/games', pathMatch: 'full' },
-      { path: 'squads', component: SquadsListComponent, canActivate: [AuthGuard] },
-      { path: 'standings', component: StandingsComponent, canActivate: [AuthGuard] },
-      { path: 'rankings', component: SquadRankingsComponent, canActivate: [AuthGuard] },
-      { path: 'games', component: SquadGamesComponent, canActivate: [AuthGuard] },
+      { path: 'squads', component: SquadsListComponent },
+      { path: 'standings', component: StandingsComponent },
+      { path: 'rankings', component: SquadRankingsComponent },
+      { path: 'games', component: SquadGamesComponent },
     ]
   }
 ];

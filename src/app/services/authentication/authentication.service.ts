@@ -79,7 +79,7 @@ export class AuthService {
     const loggedIn: any = await this.afAuth.signInWithEmailAndPassword(email, password);
     this.setUserData(loggedIn.user);
 
-    this.router.navigate(['squads']);
+    this.router.navigate(['']);
     try {
 
     } catch (error: any) {
@@ -135,9 +135,9 @@ export class AuthService {
   /* Setting up user data when sign in with username/password,
 sign up with username/password and sign in with social auth
 provider in Firestore database using AngularFirestore + AngularFirestoreDocument service */
-  private setUserData(user: User) {
-    const userRef: AngularFirestoreDocument<any> = this.afs.doc(`users/${user.uid}`);
-    console.log('$$LEAGUE$$', user.defaultLeague)
+  private async setUserData(user: User) {
+    const userRef: AngularFirestoreDocument<any> = await this.afs.doc(`users/${user.uid}`);
+
     const userData: User = {
       uid: user.uid,
       email: user.email,
@@ -151,13 +151,21 @@ provider in Firestore database using AngularFirestore + AngularFirestoreDocument
   }
 
   // Auth logic to run auth providers
-  private authLogin(provider: any) {
+  private async authLogin(provider: any) {
+
+    try {
+      const authLoginResult = await this.afAuth.signInWithPopup(provider);
+
+      await this.setUserData((authLoginResult as any).user);
+      this.router.navigate(['']);
+    } catch (error) {
+      window.alert(error)
+    }
     return this.afAuth.signInWithPopup(provider)
       .then((result: any) => {
-        this.setUserData(result.user);
-        this.router.navigate(['squads']);
+
       }).catch((error) => {
-        window.alert(error)
+
       })
   }
 }
