@@ -38,7 +38,6 @@ import { VerifyEmailComponent } from './components/authentication/verify-email/v
 import { FormWrapperComponent } from './components/authentication/form-wrapper/form-wrapper.component';
 import { SquadGamesComponent } from './components/squad-games/squad-games.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { WelcomeComponent } from './pages/welcome/welcome.component';
 import { HomeComponent } from './pages/home/home.component';
 
 
@@ -57,7 +56,6 @@ import { HomeComponent } from './pages/home/home.component';
     VerifyEmailComponent,
     FormWrapperComponent,
     SquadGamesComponent,
-    WelcomeComponent,
     HomeComponent
   ],
   imports: [

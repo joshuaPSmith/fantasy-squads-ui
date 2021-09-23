@@ -13,7 +13,6 @@ import { SquadsListComponent } from './components/squads-list/squads-list.compon
 import { SquadRankingsComponent } from './components/squad-rankings/squad-rankings.component';
 
 const routes: Routes = [
-  // { path: '', redirectTo: '/home', pathMatch: 'full' },
   { path: 'sign-in', component: SignInComponent },
   { path: 'register-user', component: SignUpComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },

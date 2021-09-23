@@ -152,20 +152,13 @@ provider in Firestore database using AngularFirestore + AngularFirestoreDocument
 
   // Auth logic to run auth providers
   private async authLogin(provider: any) {
-
     try {
       const authLoginResult = await this.afAuth.signInWithPopup(provider);
 
       await this.setUserData((authLoginResult as any).user);
       this.router.navigate(['']);
     } catch (error) {
-      window.alert(error)
+      window.alert(error);
     }
-    return this.afAuth.signInWithPopup(provider)
-      .then((result: any) => {
-
-      }).catch((error) => {
-
-      })
   }
 }
