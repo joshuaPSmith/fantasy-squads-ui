@@ -5,7 +5,7 @@ import { TutorialService } from 'src/app/services/tutorial/tutorial.service';
 @Component({
   selector: 'app-add-tutorial',
   templateUrl: './add-tutorial.component.html',
-  styleUrls: ['./add-tutorial.component.css']
+  styleUrls: ['./add-tutorial.component.scss']
 })
 export class AddTutorialComponent implements OnInit {
 

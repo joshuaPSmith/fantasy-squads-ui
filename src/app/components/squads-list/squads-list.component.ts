@@ -8,7 +8,7 @@ import Squad from 'src/app/models/squad.model';
 @Component({
   selector: 'app-squads-list',
   templateUrl: './squads-list.component.html',
-  styleUrls: ['./squads-list.component.css']
+  styleUrls: ['./squads-list.component.scss']
 })
 export class SquadsListComponent implements OnInit {
 

@@ -1,0 +1,48 @@
+/* You can add global styles to this file, and also import other style files */
+@import "../node_modules/@angular/material/prebuilt-themes/indigo-pink.css";
+
+@import '~@angular/material/theming';
+@include mat-core();
+
+$mat-primary-scheme: (
+  100: #76d275,
+  500: #43a047,
+  700: #00701a,
+  contrast: (
+    100: rgba(0,0,0,0.87),
+    500: #ffffff,
+    700: #ffffff,
+  )
+);
+$mat-accent-scheme: (
+  100: #be9c91,
+  500: #a28277,
+  700: #5f4339,
+  contrast: (
+    100: rgba(0,0,0,0.87),
+    500: rgba(255,255,255,0.87),
+    700: #ffffff,
+  )
+);
+$mat-primary-palette: mat-palette($mat-primary-scheme);
+$mat-accent-palette: mat-palette($mat-accent-scheme);
+
+$app-light-theme: mat-light-theme($mat-primary-palette, $mat-accent-palette);
+
+@include angular-material-theme($app-light-theme);
+
+// following section is for dark mode.
+// use appropriate class name for darkMode
+$app-dark-theme: mat-dark-theme($mat-primary-palette, $mat-accent-palette);
+.darkMode {
+  @include angular-material-theme($app-dark-theme);
+}
+
+
+html, body { height: 100%; }
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Forms */
+.full-width-input {
+    width: 100%;
+  }

@@ -11,7 +11,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-squad-games',
   templateUrl: './squad-games.component.html',
-  styleUrls: ['./squad-games.component.css'],
+  styleUrls: ['./squad-games.component.scss'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SquadGamesComponent implements OnInit {

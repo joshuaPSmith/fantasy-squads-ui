@@ -21,7 +21,7 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-squad-rankings',
   templateUrl: './squad-rankings.component.html',
-  styleUrls: ['./squad-rankings.component.css']
+  styleUrls: ['./squad-rankings.component.scss']
 })
 export class SquadRankingsComponent implements OnInit {
   public squads?: Squad[];
