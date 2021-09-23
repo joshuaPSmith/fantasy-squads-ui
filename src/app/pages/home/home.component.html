@@ -1,0 +1,22 @@
+<div>
+  <nav class="navbar navbar-expand navbar-dark bg-dark">
+    <a href="#" class="navbar-brand">{{title}}</a>
+    <div class="navbar-nav mr-auto">
+      <li *ngFor="let item of menuList" class="nav-item">
+        <a [routerLink]="item.href" class = "nav-link" routerLinkActive="router-link-active">
+          {{ item.title }}
+        </a>
+      </li>
+    </div>
+    <ul class="navbar-nav ml-auto" *ngIf="authService.isLoggedIn">
+      <li class="nav-item" (click)="authService.signOut()">
+        <a class="nav-link">Sign Out</a>
+      </li>
+    </ul>
+  </nav>
+
+  <div class="layout" fxLayout="column">
+    <h2 class='league-name'>{{ league?.name }}</h2>
+    <router-outlet></router-outlet>
+  </div>
+</div>

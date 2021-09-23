@@ -4,14 +4,15 @@ import { map } from 'rxjs/operators';
 import { SquadsService } from './../../services/squads/squads.service';
 import { pruneGames, getGamesPerSquad, GameInformation, getGamesPerWeek } from './../../helper/games.helper';
 import { GamesService } from './../../services/games/games.service';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ViewChild, ChangeDetectionStrategy } from '@angular/core';
 import { MatTable } from '@angular/material/table';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
 @Component({
   selector: 'app-squad-games',
   templateUrl: './squad-games.component.html',
-  styleUrls: ['./squad-games.component.css']
+  styleUrls: ['./squad-games.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SquadGamesComponent implements OnInit {
 
@@ -35,7 +36,9 @@ export class SquadGamesComponent implements OnInit {
   constructor(
     private gamesService: GamesService,
     private squadsService: SquadsService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private cdf: ChangeDetectorRef
+    ) { }
 
   ngOnInit(): void {
     this.retrieveSquads();
@@ -67,6 +70,7 @@ export class SquadGamesComponent implements OnInit {
 
 
     this.loadingData = false;
+    this.cdf.detectChanges();
   }
 
   public getGamesForSquad(squadName: string) {

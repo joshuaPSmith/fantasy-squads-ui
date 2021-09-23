@@ -13,3 +13,10 @@ mat-card-content {
         min-width: 90%;
     }
 }
+
+.main-wrapper {
+  height: 100%;
+  background-image: url("/assets/login-bg.jpg");
+  background-position: 50% 50%;
+  background-repeat: repeat;
+}

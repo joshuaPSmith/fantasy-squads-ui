@@ -39,6 +39,7 @@ import { FormWrapperComponent } from './components/authentication/form-wrapper/f
 import { SquadGamesComponent } from './components/squad-games/squad-games.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HeaderComponent } from './navigation/header/header.component';
+import { HomeComponent } from './pages/home/home.component';
 
 
 
@@ -57,6 +58,7 @@ import { HeaderComponent } from './navigation/header/header.component';
     FormWrapperComponent,
     SquadGamesComponent,
     HeaderComponent
+    HomeComponent
   ],
   imports: [
     BrowserModule,
