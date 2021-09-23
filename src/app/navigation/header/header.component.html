@@ -1,4 +1,4 @@
-<mat-toolbar color="primary">
+  <mat-toolbar color="primary">
   <div fxHide.gt-xs>
       <button mat-icon-button (click)="onToggleSidenav()">
           <mat-icon>menu</mat-icon>
@@ -14,9 +14,12 @@
             {{ item.title }}
           </a>
         </li>
-        <li class="nav-item" (click)="authService.signOut()">
+        <li class="nav-item">
           <a class="nav-link">Sign Out</a>
         </li>
+        <!-- <li class="nav-item" (click)="authService.signOut()">
+          <a class="nav-link">Sign Out</a>
+        </li> -->
       </ul>
   </div>
 </mat-toolbar>

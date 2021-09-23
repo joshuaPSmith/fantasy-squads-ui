@@ -25,6 +25,7 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
 
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -39,7 +40,8 @@ import { FormWrapperComponent } from './components/authentication/form-wrapper/f
 import { SquadGamesComponent } from './components/squad-games/squad-games.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HeaderComponent } from './navigation/header/header.component';
-import { HomeComponent } from './pages/home/home.component';
+import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
+//import { HomeComponent } from './pages/home/home.component';
 
 
 
@@ -57,8 +59,9 @@ import { HomeComponent } from './pages/home/home.component';
     VerifyEmailComponent,
     FormWrapperComponent,
     SquadGamesComponent,
-    HeaderComponent
-    HomeComponent
+    HeaderComponent,
+    SidenavListComponent
+    //HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -80,6 +83,7 @@ import { HomeComponent } from './pages/home/home.component';
     MatSnackBarModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
+    MatSidenavModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
@@ -92,7 +96,9 @@ import { HomeComponent } from './pages/home/home.component';
   exports: [
     MatToolbarModule,
     MatButtonModule,
-    MatIconModule
+    MatIconModule,
+    MatSidenavModule,
+    MatListModule
   ]
 })
 export class AppModule { }
