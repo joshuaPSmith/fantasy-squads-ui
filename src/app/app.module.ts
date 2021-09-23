@@ -14,6 +14,9 @@ import { TutorialDetailsComponent } from './components/squad-details/squad-detai
 import { HttpClientModule } from '@angular/common/http';
 import { SquadsListComponent } from './components/squads-list/squads-list.component';
 import { SquadRankingsComponent } from './components/squad-rankings/squad-rankings.component';
+import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component';
+import { HeaderComponent } from './components/header/header.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
@@ -28,6 +31,7 @@ import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
 
 
+
 import { FlexLayoutModule } from '@angular/flex-layout';
 
 
@@ -39,9 +43,7 @@ import { VerifyEmailComponent } from './components/authentication/verify-email/v
 import { FormWrapperComponent } from './components/authentication/form-wrapper/form-wrapper.component';
 import { SquadGamesComponent } from './components/squad-games/squad-games.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
-import { HeaderComponent } from './navigation/header/header.component';
-import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.component';
-//import { HomeComponent } from './pages/home/home.component';
+import { HomeComponent } from './pages/home/home.component';
 
 
 
@@ -60,8 +62,8 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     FormWrapperComponent,
     SquadGamesComponent,
     HeaderComponent,
-    SidenavListComponent
-    //HomeComponent
+    SidenavListComponent,
+    HomeComponent
   ],
   imports: [
     BrowserModule,
@@ -81,9 +83,9 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     MatCardModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatSidenavModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
-    MatSidenavModule,
     ServiceWorkerModule.register('ngsw-worker.js', {
       enabled: environment.production,
       // Register the ServiceWorker as soon as the app is stable
@@ -92,13 +94,6 @@ import { SidenavListComponent } from './navigation/sidenav-list/sidenav-list.com
     }), // for firestore
   ],
   providers: [],
-  bootstrap: [AppComponent],
-  exports: [
-    MatToolbarModule,
-    MatButtonModule,
-    MatIconModule,
-    MatSidenavModule,
-    MatListModule
-  ]
+  bootstrap: [AppComponent]
 })
 export class AppModule { }
