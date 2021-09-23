@@ -1,26 +1,13 @@
-import { AuthService } from './services/authentication/authentication.service';
-import { Component } from '@angular/core';
+import { ChangeDetectionStrategy, ChangeDetectorRef, Component, OnInit } from '@angular/core';
 
 @Component({
   selector: 'app-root',
   templateUrl: './app.component.html',
-  styleUrls: ['./app.component.css']
+  styleUrls: ['./app.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
-export class AppComponent {
-public menuList = [
-  {
-    title: 'Squads',
-    href:'squads'
-  },
-  {
-    title: 'Rankings',
-    href:'rankings'
-  },
-  {
-    title: 'Games',
-    href:'games'
-  }
-]
-  constructor(public authService: AuthService) {}
-  title = 'Squad Blitz!';
+export class AppComponent implements OnInit {
+  constructor() { }
+
+  ngOnInit(): void {}
 }

@@ -2,7 +2,7 @@ import { SquadsService } from './../../services/squads/squads.service';
 import { pruneStats, rankSquads, rankSquadsPerCategory, getSquadStandings, SquadRankByCategory, SquadStandingsRank, DetailedSquads } from './../../helper/stats.helper';
 import Squad from 'src/app/models/squad.model';
 import { StatsService } from './../../services/stats/stats.service';
-import { Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -49,7 +49,8 @@ export class SquadRankingsComponent implements OnInit {
   constructor(
     private statsService: StatsService,
     private squadsService: SquadsService,
-    private snackBar: MatSnackBar) { }
+    private snackBar: MatSnackBar,
+    private cdf: ChangeDetectorRef) { }
 
   ngOnInit(): void {
     this.retrieveSquads();
@@ -67,6 +68,7 @@ export class SquadRankingsComponent implements OnInit {
       this.squads = data;
       this.step = 1;
       this.loadingData = false;
+      this.cdf.detectChanges();
     });
   }
 
@@ -95,12 +97,13 @@ export class SquadRankingsComponent implements OnInit {
 
   public getRankings() {
     this.loadingData = true;
-    // TODO do a better job with the types. Its easier to display arrays 
+    // TODO do a better job with the types. Its easier to display arrays
     this.squadRankings = rankSquadsPerCategory(Object.values(this.squadStats));
 
     this.rankingsVisible = true;
     this.statsVisible = false;
     this.loadingData = false;
+    this.cdf.detectChanges();
   }
 
   public getStandings() {
@@ -109,6 +112,7 @@ export class SquadRankingsComponent implements OnInit {
     this.squadStandings = getSquadStandings(this.squadRankings);
     this.rankingsVisible = false;
     this.loadingData = false;
+    this.cdf.detectChanges();
   }
 
 }
