@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 
-export class AuthGuard implements CanActivate {
+export class LoggedInGuard implements CanActivate {
 
   constructor(
     public authService: AuthService,
@@ -19,9 +19,9 @@ export class AuthGuard implements CanActivate {
   canActivate(
     next: ActivatedRouteSnapshot,
     state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
-    if(this.authService.isLoggedIn !== true) {
-      this.router.navigate(['sign-in']);
-      this.snackBar.open('Please Log In!', 'Dismiss', {duration: 2500});
+    if(this.authService.isLoggedIn === true) {
+      this.router.navigate(['']);
+      this.snackBar.open('Already Logged In!', 'Dismiss', {duration: 2500});
     }
     return true;
   }

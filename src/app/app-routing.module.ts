@@ -1,3 +1,4 @@
+import { LoggedInGuard } from './guards/logged-in.guard';
 import { HomeComponent } from './pages/home/home.component';
 import { SquadGamesComponent } from './components/squad-games/squad-games.component';
 import { AuthGuard } from './guards/auth.guard';
@@ -13,10 +14,10 @@ import { SquadsListComponent } from './components/squads-list/squads-list.compon
 import { SquadRankingsComponent } from './components/squad-rankings/squad-rankings.component';
 
 const routes: Routes = [
-  { path: 'sign-in', component: SignInComponent },
-  { path: 'register-user', component: SignUpComponent },
-  { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'verify-email-address', component: VerifyEmailComponent },
+  { path: 'sign-in', component: SignInComponent, canActivate: [LoggedInGuard] },
+  { path: 'register-user', component: SignUpComponent, canActivate: [LoggedInGuard] },
+  { path: 'forgot-password', component: ForgotPasswordComponent, canActivate: [LoggedInGuard] },
+  { path: 'verify-email-address', component: VerifyEmailComponent, canActivate: [LoggedInGuard] },
   {
     path: '', component: HomeComponent, canActivate: [AuthGuard],
     children: [
