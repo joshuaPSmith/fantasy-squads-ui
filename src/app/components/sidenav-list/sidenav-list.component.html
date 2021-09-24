@@ -1,8 +1,9 @@
 <mat-nav-list>
-  <a class = "side-nav" mat-list-item routerLink="/home" (click)="onSidenavClose()">
-      <span>Close</span>
+  <a class="side-nav" mat-list-item (click)="onSidenavClose()">
+    <span>Close</span>
   </a>
-  <a *ngFor="let item of menuList" [routerLink]="item.href" class = "side-nav"  routerLinkActive="router-link-active">
+  <a *ngFor="let item of menuList" [routerLink]="item.href" class="side-nav" routerLinkActive="router-link-active"
+    (click)="onSidenavClose()">
     {{ item.title }}
   </a>
 
