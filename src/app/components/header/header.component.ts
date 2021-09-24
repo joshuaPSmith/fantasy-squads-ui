@@ -1,3 +1,4 @@
+import { AuthService } from './../../services/authentication/authentication.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 //import { AuthService } from './services/authentication/authentication.service';
 
@@ -24,7 +25,7 @@ export class HeaderComponent implements OnInit {
       href:'games'
     }
   ]
-    //constructor(public authService: AuthService) {}
+    constructor(public authService: AuthService) {}
   title = 'Squad Blitz!';
 
   ngOnInit() {

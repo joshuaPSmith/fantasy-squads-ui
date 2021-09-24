@@ -14,12 +14,9 @@
             {{ item.title }}
           </a>
         </li>
-        <li class="nav-item">
+        <li class="nav-item" (click)="authService.signOut()">
           <a class="nav-link">Sign Out</a>
         </li>
-        <!-- <li class="nav-item" (click)="authService.signOut()">
-          <a class="nav-link">Sign Out</a>
-        </li> -->
       </ul>
   </div>
 </mat-toolbar>
