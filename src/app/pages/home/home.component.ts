@@ -32,16 +32,22 @@ export class HomeComponent implements OnInit {
     private cdf: ChangeDetectorRef) { }
 
   ngOnInit(): void {
-    this.getLoggedInUser();
+    this.getLoggedInUserInformation();
   }
 
-  public async getLoggedInUser() {
+  public async getLoggedInUserInformation() {
     if (!this.authService.userData.uid) {
+      // confirm that the user is logged in
       this.authService.isLoggedIn;
     }
 
-    const user = await this.squadsService.getUserInformation(this.authService.userData.uid);
-    this.league = (await this.squadsService.getLeagueByID(user.data()?.defaultLeague))?.data();
+    try {
+      const user = await this.squadsService.getUserInformation(this.authService.userData.uid);
+      this.league = await this.squadsService.getLeagueByID(user.data()?.defaultLeague);
+    } catch (error) {
+      console.log('Error', error)
+    }
+
 
     this.cdf.detectChanges();
   }

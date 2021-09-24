@@ -37,7 +37,8 @@ export interface GameInformation {
     "homePoints": number,
     "awayTeam": string,
     "awayPoints": number,
-    "squad": string
+    "squad": string,
+    "squad2"?: string
 }
 
 
@@ -49,7 +50,23 @@ export const pruneGames = (gameInformation: Array<RawGameInformation>, squadsTea
             return false;
         }
     }).map(rawGame => {
-        const squad = squadsTeamsMap.has(rawGame.homeTeam) ? squadsTeamsMap.get(rawGame.homeTeam) : squadsTeamsMap.get(rawGame.awayTeam);
+        let squad = null;
+        let squad2 = null;
+        if (squadsTeamsMap.has(rawGame.homeTeam)) {
+          squad = squadsTeamsMap.get(rawGame.homeTeam);
+        }
+
+        if (squadsTeamsMap.has(rawGame.awayTeam)) {
+          // check if there is already and squad and its not the same one we have already
+          // If its already there then we have that game already
+          if (squad && squad !== squadsTeamsMap.get(rawGame.awayTeam)) {
+            squad2 = squadsTeamsMap.get(rawGame.awayTeam);
+          } else {
+            squad = squadsTeamsMap.get(rawGame.awayTeam);
+          }
+        }
+
+
 
         return {
             "season": rawGame.season,
@@ -61,13 +78,14 @@ export const pruneGames = (gameInformation: Array<RawGameInformation>, squadsTea
             "homePoints": rawGame.homePoints,
             "awayTeam": rawGame.awayTeam,
             "awayPoints": rawGame.awayPoints,
-            "squad": squad as string
+            "squad": squad as string,
+            "squad2": squad2 as string
         }
     });
 }
 
 export const getGamesPerSquad = (games: GameInformation[], squad: string) => {
-    return games.filter(game => game.squad === squad);
+    return games.filter(game => game.squad === squad || game.squad2 === squad);
 }
 
 export const getGamesPerWeek = (games: GameInformation[], week: number) => {

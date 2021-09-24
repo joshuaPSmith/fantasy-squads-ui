@@ -16,8 +16,12 @@ export class SquadsService {
 
   private usersCollection: AngularFirestoreCollection;
   private leaguesCollection: AngularFirestoreCollection;
+  private squadsRef: AngularFirestoreCollection<Squad[]>;
 
-  squadsRef: AngularFirestoreCollection<Squad[]>;
+  public usersSquad: Squad | null = null;
+  public usersLeague: any = {
+    loaded: false
+  }
 
   constructor(private db: AngularFirestore, private fireFunctions: AngularFireFunctions, private http: HttpClient) {
       this.squadsRef = db.collection(this.squadsDBPath);
@@ -35,11 +39,20 @@ public getUserInformation(id: string) {
   return this.usersCollection.doc(`${id}`).get().toPromise();
 }
 
-public getLeagueByID(id: string) {
-  return this.leaguesCollection.doc(`${id}`).get().toPromise();
+public async getLeagueByID(id: string) {
+  if (this.usersLeague.loaded) {
+    return this.usersLeague;
+  }
+
+  try {
+    const league = (await this.leaguesCollection.doc(`${id}`).get().toPromise()).data();
+    this.usersLeague = {...league, loaded: true}
+
+    return this.usersLeague;
+  } catch (error) {
+    throw Error((error as Error).message)
+  }
+
 }
 
-public update(test: any, id: any) {
-  return this.leaguesCollection.doc(`${id}`).update(test);
-}
 }
