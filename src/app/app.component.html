@@ -1,21 +1,11 @@
 <mat-drawer-container>
-  <!-- <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
+  <app-header (sidenavToggle)="sidenav.toggle()"></app-header>
   <main>
     <router-outlet></router-outlet>
   </main>
   <mat-sidenav #sidenav role="navigation">
     <app-sidenav-list (sidenavClose)="sidenav.close()"></app-sidenav-list>
-  </mat-sidenav> -->
-  <mat-drawer #drawer class="example-sidenav" mode="side">
-    <p>Auto-resizing sidenav</p>
-  </mat-drawer>
-
-  <div class="example-sidenav-content">
-    <button type="button" mat-button (click)="drawer.toggle()">
-      Toggle sidenav
-    </button>
-    <router-outlet></router-outlet>
-  </div>
+  </mat-sidenav>
 </mat-drawer-container>
 
 <!-- <div>

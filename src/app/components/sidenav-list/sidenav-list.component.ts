@@ -16,5 +16,22 @@ export class SidenavListComponent implements OnInit {
   public onSidenavClose = () => {
     this.sidenavClose.emit();
   }
+  public menuList = [
+    {
+      title: 'Squads',
+      href:'squads'
+    },
+    {
+      title: 'Rankings',
+      href:'rankings'
+    },
+    {
+      title: 'Games',
+      href:'games'
+    }
+  ]
+    //constructor(public authService: AuthService) {}
+  title = 'Squad Blitz!';
+
 
 }

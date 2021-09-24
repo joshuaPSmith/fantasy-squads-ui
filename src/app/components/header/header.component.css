@@ -13,6 +13,11 @@ a:hover, a:active{
   margin: 0;
 }
 
+.navbar-brand{
+  padding-left: 200px;
+  display: inline-block;
+}
+
 mat-toolbar{
   border-radius: 3px;
 }
