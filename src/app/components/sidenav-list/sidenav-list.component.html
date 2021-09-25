@@ -1,11 +1,16 @@
-<mat-nav-list>
-  <a class="side-nav" mat-list-item (click)="onSidenavClose()">
-    <span>Close</span>
+<mat-nav-list class="sidenav-menu-items">
+  <a mat-list-item (click)="onSidenavClose()">
+    <mat-icon>menu_open</mat-icon>
   </a>
-  <a *ngFor="let item of menuList" [routerLink]="item.href" class="side-nav" routerLinkActive="router-link-active"
-    (click)="onSidenavClose()">
-    {{ item.title }}
-  </a>
+
+  <ul class = "no-bullets">
+    <li *ngFor="let item of menuList">
+      <a [routerLink]="item.href" routerLinkActive="router-link-active"
+      (click)="onSidenavClose()">
+      {{ item.title }}
+      </a>
+    </li>
+  </ul>
 
   <!-- <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
       <mat-icon>assignment_ind</mat-icon> <span class="nav-caption">Owner Actions</span>

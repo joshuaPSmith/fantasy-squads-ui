@@ -7,16 +7,26 @@ a:hover, a:active{
   color: lightgray;
 }
 
-.nav-caption{
-  display: inline-block;
-  text-align: center;
-  padding-left: 6px;
-}
-
-.side-nav {
+.no-bullets{
+  list-style: none;
+  text-align: left;
   display: block;
   padding: .5rem 1rem;
   text-align: center;
   text-decoration: none;
-
 }
+
+.sidenav-menu-items{
+  text-align: left;
+  display: block;
+  padding: .5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+}
+
+/* .side-nav {
+  display: block;
+  padding: .5rem 1rem;
+  text-align: center;
+  text-decoration: none;
+} */
