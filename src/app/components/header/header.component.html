@@ -5,12 +5,12 @@
       </button>
   </div>
   <div>
-    <a href="#">{{title}}</a>
+    <a class="menu-items-text" href="#">{{title}}</a>
   </div>
   <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
-      <ul fxLayout fxLayoutGap="15px" class = "topbar-menu-items">
+      <ul fxLayout fxLayoutGap="15px" class = "topbar-menu-list">
         <li *ngFor="let item of menuList" >
-          <a [routerLink]="item.href"  routerLinkActive="router-link-active">
+          <a class="menu-items-text" [routerLink]="item.href" routerLinkActive="router-link-active">
             {{ item.title }}
           </a>
         </li>

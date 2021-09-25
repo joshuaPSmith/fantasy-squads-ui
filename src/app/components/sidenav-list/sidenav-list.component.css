@@ -1,32 +1,10 @@
-a{
-  text-decoration: none;
-  color: white;
-}
-
-a:hover, a:active{
-  color: lightgray;
-}
-
-.no-bullets{
+.sidenav-menu-list{
   list-style: none;
   text-align: left;
-  display: block;
   padding: .5rem 1rem;
-  text-align: center;
-  text-decoration: none;
 }
 
-.sidenav-menu-items{
-  text-align: left;
-  display: block;
-  padding: .5rem 1rem;
-  text-align: center;
-  text-decoration: none;
+.sidenav-close-icon{
+  padding-left: 20px;
+  font-size: 30px;
 }
-
-/* .side-nav {
-  display: block;
-  padding: .5rem 1rem;
-  text-align: center;
-  text-decoration: none;
-} */

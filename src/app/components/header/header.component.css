@@ -1,16 +1,19 @@
-a {
+/* a {
   text-decoration: none;
   color: white;
 }
 
 a:hover, a:active{
   color: lightgray;
+} */
+
+.topbar-menu-list{
+  list-style-type: none;
 }
 
-.topbar-menu-items{
-  list-style-type: none;
-  padding: 0;
-  margin: 0;
+.menu-items-text{
+  color: #fff;
+  text-decoration: none;
 }
 
 mat-toolbar{
