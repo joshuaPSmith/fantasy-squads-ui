@@ -4,6 +4,9 @@
   </a>
 
   <ul class = "no-bullets">
+    <li (click)="authService.signOut()">
+      <a>Sign Out</a>
+    </li>
     <li *ngFor="let item of menuList">
       <a [routerLink]="item.href" routerLinkActive="router-link-active"
       (click)="onSidenavClose()">
@@ -11,11 +14,4 @@
       </a>
     </li>
   </ul>
-
-  <!-- <a mat-list-item routerLink="/owner" (click)="onSidenavClose()">
-      <mat-icon>assignment_ind</mat-icon> <span class="nav-caption">Owner Actions</span>
-  </a>
-  <a mat-list-item routerLink="#" (click)="onSidenavClose()">
-      <mat-icon>account_balance</mat-icon><span class="nav-caption">Account Actions</span>
-  </a> -->
 </mat-nav-list>
