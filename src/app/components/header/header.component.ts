@@ -1,6 +1,7 @@
 import { AuthService } from './../../services/authentication/authentication.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
 //import { AuthService } from './services/authentication/authentication.service';
+import { MenuList } from 'src/app/models/navigation';
 
 @Component({
   selector: 'app-header',
@@ -11,21 +12,10 @@ export class HeaderComponent implements OnInit {
 
   @Output() public sidenavToggle = new EventEmitter();
 
-  public menuList = [
-    {
-      title: 'Squads',
-      href:'squads'
-    },
-    {
-      title: 'Rankings',
-      href:'rankings'
-    },
-    {
-      title: 'Games',
-      href:'games'
-    }
-  ]
-    constructor(public authService: AuthService) {}
+  public menuList = MenuList;
+
+  constructor(public authService: AuthService) {}
+
   title = 'Squad Blitz!';
 
   ngOnInit() {

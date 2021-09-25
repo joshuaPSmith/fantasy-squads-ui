@@ -1,5 +1,6 @@
 import { AuthService } from './../../services/authentication/authentication.service';
 import { Component, OnInit, Output, EventEmitter } from '@angular/core';
+import { MenuList } from 'src/app/models/navigation';
 
 @Component({
   selector: 'app-sidenav-list',
@@ -15,21 +16,10 @@ export class SidenavListComponent implements OnInit {
   public onSidenavClose = () => {
     this.sidenavClose.emit();
   }
-  public menuList = [
-    {
-      title: 'Squads',
-      href:'squads'
-    },
-    {
-      title: 'Rankings',
-      href:'rankings'
-    },
-    {
-      title: 'Games',
-      href:'games'
-    }
-  ]
-    constructor(public authService: AuthService) {}
+
+  public menuList = MenuList;
+
+  constructor(public authService: AuthService) {}
   title = 'Squad Blitz!';
 
 
