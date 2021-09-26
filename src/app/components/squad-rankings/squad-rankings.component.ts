@@ -93,6 +93,7 @@ export class SquadRankingsComponent implements OnInit {
     }
 
     this.loadingData = false;
+    this.cdf.detectChanges();
   }
 
   public getRankings() {
