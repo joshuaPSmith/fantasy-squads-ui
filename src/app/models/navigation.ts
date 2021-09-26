@@ -12,3 +12,8 @@ export const MenuList = [
     href:'games'
   }
 ]
+
+export interface MenuListItem {
+     title: string,
+     href: string
+     }
