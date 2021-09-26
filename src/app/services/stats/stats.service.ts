@@ -22,7 +22,17 @@ export class StatsService {
         const callable = this.fireFunctions.httpsCallable('getAllStats');
         try {
             return callable({}).toPromise();
-            
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
+    public async getGameStatsByWeek(week: number) {
+        const callable = this.fireFunctions.httpsCallable('getGameStatsByWeek');
+        try {
+            return callable({week: week}).toPromise();
+
         } catch (error) {
             console.error(error);
         }

@@ -14,7 +14,6 @@
 				},
 				"@schematics/angular:component": {
 					"changeDetection": "OnPush",
-					"styleext": "scss",
 					"style": "scss"
 				}
 			},
