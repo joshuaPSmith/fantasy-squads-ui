@@ -1,0 +1,17 @@
+<mat-nav-list>
+  <a mat-list-item (click)="onSidenavClose()">
+    <mat-icon class="sidenav-close-icon">menu_open</mat-icon>
+  </a>
+  <hr>
+  <ul class = "sidenav-menu-list">
+    <li (click)="authService.signOut()">
+      <a>Sign Out</a>
+    </li>
+    <li *ngFor="let item of menuList">
+      <a [routerLink]="item.href" routerLinkActive="router-link-active"
+      (click)="onSidenavClose()">
+      {{ item.title }}
+      </a>
+    </li>
+  </ul>
+</mat-nav-list>

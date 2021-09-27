@@ -1,0 +1,18 @@
+.topbar-menu-list{
+  list-style-type: none;
+}
+
+.menu-items-text{
+  color: #fff;
+  text-decoration: none;
+}
+
+mat-toolbar{
+  border-radius: 3px;
+}
+
+@media(max-width: 959px){
+  mat-toolbar{
+      border-radius: 0px;
+  }
+}

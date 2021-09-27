@@ -1,0 +1,10 @@
+.sidenav-menu-list{
+  list-style: none;
+  text-align: left;
+  padding: .5rem 1rem;
+}
+
+.sidenav-close-icon{
+  padding-left: 20px;
+  font-size: 30px;
+}
