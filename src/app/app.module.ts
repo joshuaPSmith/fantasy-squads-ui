@@ -14,6 +14,9 @@ import { TutorialDetailsComponent } from './components/squad-details/squad-detai
 import { HttpClientModule } from '@angular/common/http';
 import { SquadsListComponent } from './components/squads-list/squads-list.component';
 import { SquadRankingsComponent } from './components/squad-rankings/squad-rankings.component';
+import { SidenavListComponent } from './components/sidenav-list/sidenav-list.component';
+import { HeaderComponent } from './components/header/header.component';
+
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { MatExpansionModule } from '@angular/material/expansion';
 import { MatButtonModule } from '@angular/material/button';
@@ -25,6 +28,10 @@ import { MatCardModule } from '@angular/material/card';
 import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
+import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDividerModule } from '@angular/material/divider';
+
 
 
 import { FlexLayoutModule } from '@angular/flex-layout';
@@ -58,7 +65,9 @@ import { MatchupsComponent } from './pages/matchups/matchups.component';
     FormWrapperComponent,
     SquadGamesComponent,
     HomeComponent,
-    MatchupsComponent
+    MatchupsComponent,
+    HeaderComponent,
+    SidenavListComponent,
   ],
   imports: [
     BrowserModule,
@@ -78,6 +87,9 @@ import { MatchupsComponent } from './pages/matchups/matchups.component';
     MatCardModule,
     MatSelectModule,
     MatSnackBarModule,
+    MatSidenavModule,
+    MatProgressBarModule,
+    MatDividerModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

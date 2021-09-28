@@ -1,4 +1,4 @@
-<div class="button-row">
+<div class="button-row" *ngIf="!loadingData">
 <button mat-raised-button color="primary" *ngIf="step > 0" (click)="getStats()">Get Stats</button>
 <button mat-raised-button color="accent" *ngIf="step === 2" (click)="getRankings()">Get Ranking</button>
 <button mat-raised-button color="accent" *ngIf="squadRankings?.length" (click)="getStandings()">Get Standings</button>
@@ -53,20 +53,5 @@
 </div>
 
 <div *ngIf="loadingData">
-    <div class="spinner-grow text-primary" role="status">
-    </div>
-    <div class="spinner-grow text-secondary" role="status">
-    </div>
-    <div class="spinner-grow text-success" role="status">
-    </div>
-    <div class="spinner-grow text-danger" role="status">
-    </div>
-    <div class="spinner-grow text-warning" role="status">
-    </div>
-    <div class="spinner-grow text-info" role="status">
-    </div>
-    <div class="spinner-grow text-light" role="status">
-    </div>
-    <div class="spinner-grow text-dark" role="status">
-    </div>
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
 </div>

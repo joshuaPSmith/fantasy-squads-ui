@@ -1,0 +1,23 @@
+  <mat-toolbar color="primary">
+  <div fxHide.gt-xs>
+      <button mat-icon-button (click)="onToggleSidenav()">
+          <mat-icon>menu</mat-icon>
+      </button>
+  </div>
+  <div>
+    <a class="menu-items-text" href="#">{{title}}</a>
+  </div>
+  <div fxFlex fxLayout fxLayoutAlign="end" fxHide.xs>
+      <ul fxLayout fxLayoutGap="15px" class = "topbar-menu-list">
+        <li *ngFor="let item of menuList" >
+          <a class="menu-items-text" [routerLink]="item.href" routerLinkActive="router-link-active">
+            {{ item.title }}
+          </a>
+        </li>
+        <mat-divider [vertical]="true"></mat-divider>
+        <li (click)="authService.signOut()">
+          <a>Sign Out</a>
+        </li>
+      </ul>
+  </div>
+</mat-toolbar>

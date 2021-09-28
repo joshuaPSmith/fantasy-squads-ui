@@ -8,20 +8,6 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
   styleUrls: ['./home.component.scss']
 })
 export class HomeComponent implements OnInit {
-  public menuList = [
-    {
-      title: 'Squads',
-      href: 'squads'
-    },
-    {
-      title: 'Rankings',
-      href: 'rankings'
-    },
-    {
-      title: 'Games',
-      href: 'games'
-    }
-  ];
 
   public league: any;
   public title = 'Squad Blitz!';
