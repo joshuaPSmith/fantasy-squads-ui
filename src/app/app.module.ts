@@ -29,6 +29,8 @@ import { MatTableModule } from '@angular/material/table';
 import { MatSelectModule } from '@angular/material/select';
 import { MatSnackBarModule } from '@angular/material/snack-bar';
 import { MatSidenavModule } from '@angular/material/sidenav';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { MatDividerModule } from '@angular/material/divider';
 
 
 
@@ -84,6 +86,8 @@ import { HomeComponent } from './pages/home/home.component';
     MatSelectModule,
     MatSnackBarModule,
     MatSidenavModule,
+    MatProgressBarModule,
+    MatDividerModule,
     FlexLayoutModule,
     BrowserAnimationsModule,
     ServiceWorkerModule.register('ngsw-worker.js', {

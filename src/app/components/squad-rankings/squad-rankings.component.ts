@@ -2,7 +2,7 @@ import { SquadsService } from './../../services/squads/squads.service';
 import { pruneStats, rankSquads, rankSquadsPerCategory, getSquadStandings, SquadRankByCategory, SquadStandingsRank, DetailedSquads } from './../../helper/stats.helper';
 import Squad from 'src/app/models/squad.model';
 import { StatsService } from './../../services/stats/stats.service';
-import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
+import { ChangeDetectorRef, Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
@@ -21,7 +21,8 @@ import { MatSnackBar } from '@angular/material/snack-bar';
 @Component({
   selector: 'app-squad-rankings',
   templateUrl: './squad-rankings.component.html',
-  styleUrls: ['./squad-rankings.component.scss']
+  styleUrls: ['./squad-rankings.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class SquadRankingsComponent implements OnInit {
   public squads?: Squad[];
@@ -58,6 +59,7 @@ export class SquadRankingsComponent implements OnInit {
 
   public retrieveSquads(): void {
     this.loadingData = true;
+    this.cdf.detectChanges();
     this.squadsService.getAll().snapshotChanges().pipe(
       map(changes =>
         changes.map((c: { payload: { doc: { id: any; data: () => any; }; }; }) =>
@@ -74,6 +76,7 @@ export class SquadRankingsComponent implements OnInit {
 
   public async getStats() {
     this.loadingData = true;
+    this.cdf.detectChanges();
     // I should have the teams now but need to confirm that
 
     try {
@@ -98,6 +101,7 @@ export class SquadRankingsComponent implements OnInit {
 
   public getRankings() {
     this.loadingData = true;
+    this.cdf.detectChanges();
     // TODO do a better job with the types. Its easier to display arrays
     this.squadRankings = rankSquadsPerCategory(Object.values(this.squadStats));
 
@@ -109,9 +113,11 @@ export class SquadRankingsComponent implements OnInit {
 
   public getStandings() {
     this.loadingData = true;
+    this.cdf.detectChanges();
 
     this.squadStandings = getSquadStandings(this.squadRankings);
     this.rankingsVisible = false;
+
     this.loadingData = false;
     this.cdf.detectChanges();
   }
