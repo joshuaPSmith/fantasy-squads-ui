@@ -1,1 +1,29 @@
-<p>matchups works!</p>
+<div *ngIf="!loading">
+  <ul *ngFor="let matchup of matchupResults">
+    {{matchup.squadName}}
+    <li *ngFor="let squad of matchup.squads">
+      {{squad.category}} - {{squad.team}} - {{squad.points}}
+    </li>
+    {{matchup.matchupTotal}}
+  </ul>
+</div>
+<button (click)="getStatsForWeek(matchups?.week4.week, matchups?.week4?.matchups?.matchup1)">TEST MATCHUP</button>
+<button (click)="setMatchup()">TEST SET</button>
+<div>
+  <div *ngFor="let matchup of matchups | keyvalue">
+    {{matchup.key}}
+
+    <div *ngFor="let matchup of matchup.value.matchups | keyvalue">
+      {{matchup.key}}
+      <ul *ngFor="let item of matchup.value">
+        <li>
+          {{item.squadUID}}
+
+          <ul *ngFor="let test of item.squads">
+            {{test.category}} - {{test.team}} - {{test.points}}
+          </ul>
+        </li>
+      </ul>
+    </div>
+  </div>
+</div>

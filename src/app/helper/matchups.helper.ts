@@ -1,5 +1,13 @@
+import { teamStats } from './../../assets/teamStats';
+import { MatchUpMetrics, Matchups, GameTeamStat, GameStat, MatchupScoring } from './../models/matchups.model';
+
+const matchupCategories: any = {
+  'passingTeam': ['netPassingYards', 'passingTDs'],
+  'rushingTeam': ['rushingYards', 'rushingTDs'],
+  'defensiveTeam': ['sacks', 'interceptions', 'fumblesRecovered', 'defensiveTDs']
+}
 const matchUpMetrics: MatchUpMetrics = {
-  passing: {
+  passingTeam: {
     netPassingYards: {
       name: 'Passing Yards',
       value: 1,
@@ -13,7 +21,7 @@ const matchUpMetrics: MatchUpMetrics = {
       total: true
     }
   },
-  rushing: {
+  rushingTeam: {
     rushingYards: {
       name: 'Rushing Yards',
       value: 1,
@@ -27,7 +35,7 @@ const matchUpMetrics: MatchUpMetrics = {
       total: true
     }
   },
-  defense: {
+  defensiveTeam: {
     sacks: {
       name: 'Sacks',
       value: 2,
@@ -55,74 +63,165 @@ const matchUpMetrics: MatchUpMetrics = {
   }
 }
 
-const week4Matchup = [
- {
-    squadUID: 'mLjGwubov66ji4fPIRSI',
-    rushingTeam: 'kent state',
-    passingTeam: 'arkansas state',
-    defensiveTeam: 'texas a&m'
-  },
- {
-    squadUID: 'EcdJ4qnzOVITIEJUPpyP',
-    rushingTeam: 'wisconsin',
-    passingTeam: 'mississippi state',
-    defensiveTeam: 'costal carolina'
+
+export const getStatsForCurrentMatchup = (currentMatchup: Array<Matchups>, gamesStats: Array<GameStat>) => {
+  // get map of all of the teams used in current matchups so we know to use them
+  const teamsMap = makeMapOfMatchupTeams(currentMatchup);
+
+  // this is the map that we are building out with our teams and stats
+  const statsMap: Map<string, Array<{ "category": "string", "stat": "string" }>> = new Map();
+
+  // go through the games and look for the teams we are interested in
+  gamesStats.forEach((gameStat) => {
+    // Each game has two teams
+    gameStat.teams.forEach(teamStat => {
+      const teamsMatchupCategory: any = teamsMap.get(teamStat.school);
+
+      if (teamsMatchupCategory) {
+        // This is a team we are interested in
+
+        // we need to get the stats that we are interested in
+        const categoriesForTeam: Array<string> = matchupCategories[teamsMatchupCategory];
+
+        // Lets get the stat we are interested in
+        const stats = teamStat.stats.filter(stat => categoriesForTeam.includes(stat.category));
+
+        // confirm we have the stat
+        if (stats.length) {
+          // now set it to map
+          statsMap.set(teamStat.school, stats);
+        }
+      }
+    })
+  });
+
+  return statsMap;
+}
+
+export const getMatchUpValuesForTeams = (currentMatch: Array<Matchups>, statsMap: Map<string, Array<{ "category": "string", "stat": "string" }>>) => {
+  currentMatch.forEach(matchup => {
+
+    matchup.squads.forEach(matchupInfo => {
+      const teamStats = statsMap.get(matchupInfo.team);
+
+      teamStats?.forEach(stat => {
+        const metric = (matchUpMetrics as any)[matchupInfo.category][stat.category];
+        matchupInfo.points = calculatePoints(metric, parseInt(stat.stat))
+      })
+    })
+  });
+
+  // TODO: I think this is not immutable
+  return currentMatch;
+}
+
+const calculatePoints = (metric: MatchupScoring, value: number) => {
+  if (metric.total) {
+    return value * metric.value
+  } else {
+    return Math.floor(value / metric.perYard) * metric.value
   }
-]
-
-const getStatsForCurrentMatchup = (currentMatchup: Array<Matchups>, gamesStats: Array<GameTeamStat>) => {
-
 }
 
-interface Matchups {
-  squadUID: string,
-  rushingTeam: string,
-  passingTeam: string,
-  defensiveTeam: string
+const makeMapOfMatchupTeams = (currentMatchup: Array<Matchups>) => {
+  const teamsMap = new Map();
+
+  currentMatchup.forEach(matchup => {
+    matchup.squads.forEach(teamInfo => {
+      teamsMap.set(teamInfo.team, teamInfo.category)
+    })
+  });
+
+  return teamsMap;
 }
 
-interface MatchUpMetrics {
-  passing: {
-    netPassingYards: MatchupScoring,
-    passingTDs: MatchupScoring
-  },
-  rushing: {
-    rushingYards: MatchupScoring,
-    rushingTDs: MatchupScoring
-  },
-  defense: {
-    sacks: MatchupScoring,
-    interceptions: MatchupScoring,
-    fumblesRecovered: MatchupScoring,
-    defensiveTDs: MatchupScoring
-  }
-}
-
-interface MatchupScoring {
-      name: string,
-      value: number,
-      perYard: number,
-      total: boolean
-    }
-
-
-interface GameStat {
-      "id": number,
-      "teams": Array<GameTeamStat>
-}
-
-interface GameTeamStat {
-    "school": "string",
-    "conference": "string",
-    "homeAway": true,
-    "points": number,
-    "stats": [
+export const week4 = {
+  week: 4,
+  active: false,
+  past: true,
+  matchups: {
+    matchup1: [
       {
-        "category": "string",
-        "stat": "string"
+        squadUID: 'mLjGwubov66ji4fPIRSI',
+        squads:
+          [{ category: 'rushingTeam', team: 'Kent State', points: 0 },
+          { category: 'passingTeam', team: 'Arkansas State', points: 0 },
+          { category: 'defensiveTeam', team: 'Texas A&M', points: 0 }],
+        matchupTotal: 0
+      },
+      {
+        squadUID: 'EcdJ4qnzOVITIEJUPpyP',
+        squads:
+          [{ category: 'rushingTeam', team: 'Wisconsin', points: 0 },
+          { category: 'passingTeam', team: 'Mississippi State', points: 0 },
+          { category: 'defensiveTeam', team: 'Coastal Carolina', points: 0 }],
+        matchupTotal: 0
       }
     ]
+  }
 }
+export const week5 = {
+  week: 5,
+  active: true,
+  past: false,
+  matchups: {
+    matchup1: [
+      {
+        squadUID: 'mLjGwubov66ji4fPIRSI',
+        squads:
+          [{ category: 'rushingTeam', team: '', points: 0 },
+          { category: 'passingTeam', team: '', points: 0 },
+          { category: 'defensiveTeam', team: '', points: 0 }],
+        matchupTotal: 0
+      },
+      {
+        squadUID: '52X2QiXz7OCrNRpjjt2U',
+        squads:
+          [{ category: 'rushingTeam', team: '', points: 0 },
+          { category: 'passingTeam', team: '', points: 0 },
+          { category: 'defensiveTeam', team: '', points: 0 }],
+        matchupTotal: 0
+      },
+    ],
+    matchup2: [
+      {
+        squadUID: '',
+        squads:
+          [{ category: 'rushingTeam', team: '', points: 0 },
+          { category: 'passingTeam', team: '', points: 0 },
+          { category: 'defensiveTeam', team: '', points: 0 }],
+        matchupTotal: 0
+      },
+      {
+        squadUID: 'EcdJ4qnzOVITIEJUPpyP',
+        squads:
+          [{ category: 'rushingTeam', team: '', points: 0 },
+          { category: 'passingTeam', team: '', points: 0 },
+          { category: 'defensiveTeam', team: '', points: 0 }],
+        matchupTotal: 0
+      },
+    ],
+    matchup3: [
+      {
+        squadUID: 'k08dC6ulgR9xrwH77A0h',
+        squads:
+          [{ category: 'rushingTeam', team: '', points: 0 },
+          { category: 'passingTeam', team: '', points: 0 },
+          { category: 'defensiveTeam', team: '', points: 0 }],
+        matchupTotal: 0
+      },
+      {
+        squadUID: '',
+        squads:
+          [{ category: 'rushingTeam', team: '', points: 0 },
+          { category: 'passingTeam', team: '', points: 0 },
+          { category: 'defensiveTeam', team: '', points: 0 }],
+        matchupTotal: 0
+      },
+    ]
+  }
+}
+
 const categories = [
   'tacklesForLoss',
   'defensiveTDs',
