@@ -209,6 +209,54 @@ const makeMapOfMatchupTeams = (currentMatchup: Array<Matchups>) => {
 //       }
 //     ]
 // }
+export const week6: WeeklyMatchupInfo = {
+  week: 6,
+  active: true,
+  past: false,
+  squadMatchups:
+    [
+      {
+        weeklyMatchup: [
+          {
+            squadUID: 'mLjGwubov66ji4fPIRSI', //Josh
+            selectedSquads:
+              [{ category: 'rushingTeam', team: '', points: 0 },
+              { category: 'passingTeam', team: '', points: 0 },
+              { category: 'defensiveTeam', team: '', points: 0 }],
+            matchupTotal: 0
+          },
+          {
+            squadUID: 'o6WsnetFzo0xfi0DgPKa', //Justin
+            selectedSquads:
+              [{ category: 'rushingTeam', team: '', points: 0 },
+              { category: 'passingTeam', team: '', points: 0 },
+              { category: 'defensiveTeam', team: '', points: 0 }],
+            matchupTotal: 0
+          },
+        ]
+      },
+      {
+        weeklyMatchup: [
+          {
+            squadUID: '52X2QiXz7OCrNRpjjt2U', //Tyler
+            selectedSquads:
+              [{ category: 'rushingTeam', team: '', points: 0 },
+              { category: 'passingTeam', team: '', points: 0 },
+              { category: 'defensiveTeam', team: '', points: 0 }],
+            matchupTotal: 0
+          },
+          {
+            squadUID: 'EcdJ4qnzOVITIEJUPpyP', //Ben
+            selectedSquads:
+              [{ category: 'rushingTeam', team: '', points: 0 },
+              { category: 'passingTeam', team: '', points: 0 },
+              { category: 'defensiveTeam', team: '', points: 0 }],
+            matchupTotal: 0
+          },
+        ]
+      }
+    ]
+}
 
 const categories = [
   'tacklesForLoss',
