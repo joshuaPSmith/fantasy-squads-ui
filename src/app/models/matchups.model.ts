@@ -1,6 +1,13 @@
+export interface WeeklyMatchupInfo {
+  week: number,
+      squadMatchups: Array<{weeklyMatchup: Array<Matchups>}>,
+      active: boolean,
+      past: boolean,
+}
+
 export interface Matchups {
   squadUID: string,
-  squads: Array<
+  selectedSquads: Array<
   {
     category: string,
     team: string,

@@ -29,7 +29,7 @@ export class StatsService {
     }
 
     public async getGameStatsByWeek(week: number) {
-        const callable = this.fireFunctions.httpsCallable('getGameStatsByWeek');
+        const callable = this.fireFunctions.httpsCallable('getGameStatsByWeek2');
         try {
             return callable({week: week}).toPromise();
 
@@ -38,21 +38,4 @@ export class StatsService {
         }
     }
 
-    // public getAllAsPromise(): any {
-    //     return this.db.collection(this.dbPath).get().toPromise();
-    // }
-
-    // public async getTeamStats(team: string): Promise<any> {
-    //     let currentSquads = null;
-    //     this.squadsRef.snapshotChanges().pipe(take(1),).subscribe(squadArray => {
-    //         currentSquads = squadArray.map(squad => {
-    //             return {
-    //                 id: squad.payload.doc.id,
-    //                 ...squad.payload.doc.data()
-    //             } as unknown as Squad
-    //           })
-
-    //     })
-    //     return Promise.resolve(teamStats);
-    // }
 }

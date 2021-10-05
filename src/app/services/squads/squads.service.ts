@@ -57,7 +57,7 @@ public async getLeagueByID(id: string) {
 
 public async setMatchup(weeklyMatchup: any, leagueID: string) {
   try {
-    return await this.leaguesCollection.doc(leagueID).update({'matchups.week4': weeklyMatchup});
+    return await this.leaguesCollection.doc(leagueID).update({'matchups': weeklyMatchup});
   } catch (error) {
     throw Error((error as Error).message)
   }
