@@ -13,8 +13,7 @@ export interface Matchups {
     team: string,
     points: number
   }
-  >
-  squadName?: string;
+  >,
   matchupTotal: number
 }
 

@@ -1,3 +1,4 @@
+import { League } from './../../models/league.model';
 import { SquadsService } from './../../services/squads/squads.service';
 import { AuthService } from './../../services/authentication/authentication.service';
 import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
@@ -9,7 +10,14 @@ import { ChangeDetectorRef, Component, OnInit } from '@angular/core';
 })
 export class HomeComponent implements OnInit {
 
-  public league: any;
+  // TODO: Should I just use a class here?
+  public league: League = {
+    uid: '',
+    leagueName: '',
+    squads: [],
+    users: [],
+    matchups: []
+  };
   public title = 'Squad Blitz!';
 
   constructor(
@@ -29,11 +37,10 @@ export class HomeComponent implements OnInit {
 
     try {
       const user = await this.squadsService.getUserInformation(this.authService.userData.uid);
-      this.league = await this.squadsService.getLeagueByID(user.data()?.defaultLeague);
+      this.league = await this.squadsService.getLeagueByID(user.defaultLeague);
     } catch (error) {
       console.log('Error', error)
     }
-
 
     this.cdf.detectChanges();
   }

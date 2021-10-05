@@ -3,4 +3,3 @@ export default interface Squad {
     name: string;
     teamsList: Array<string>
   }
-  

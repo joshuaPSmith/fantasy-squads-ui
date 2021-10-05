@@ -1,7 +1,8 @@
+import { League, LoggedInUser, UsersSquad } from './../../models/league.model';
 import { AuthService } from './../../services/authentication/authentication.service';
 import { SquadsService } from './../../services/squads/squads.service';
 import { Matchups, WeeklyMatchupInfo } from './../../models/matchups.model';
-import { getStatsForCurrentMatchup, getMatchUpValuesForTeams } from './../../helper/matchups.helper';
+import { getStatsForCurrentMatchup, getMatchUpValuesForTeams, week6 } from './../../helper/matchups.helper';
 import { StatsService } from './../../services/stats/stats.service';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
@@ -15,15 +16,10 @@ export class MatchupsComponent implements OnInit {
   public loading = false;
   public matchupResults: Array<Matchups> = [];
   public leagueWeeklyMatchups: Array<WeeklyMatchupInfo> = [];
-  // public matchups: Array< WeeklyMatchupInfo> = [
-  //   {
-  //     week: 4,
-  //     active: false,
-  //     past: true,
-  //     squadMatchups: [{weeklyMatchup: this.week4Matchup}]
-  //   },
-  //   week5
-  // ];
+  public squadNameMap: Map<string, string> = new Map();
+  public user!: LoggedInUser;
+  public usersSquad!: UsersSquad;
+  public teamListForSelect: Array<string> = [];
 
   constructor(
     private statsService: StatsService,
@@ -44,13 +40,21 @@ export class MatchupsComponent implements OnInit {
       if (weeklyMatchup.past) {
         // This has already happened. Lets get the results
         this.getStatsForWeek(weeklyMatchup.week, weeklyMatchup.squadMatchups);
-      } else {
-        // Set the names for each one
-        weeklyMatchup.squadMatchups.forEach(matchup => {
-          matchup.weeklyMatchup.forEach(squad => squad.squadName = this.squadsService.usersLeague.squads.find((squad: any) => squad.uid === squad.squadUID)?.name)
-        })
       }
     })
+
+    this.squadsService.usersLeague.squads.forEach((squad: UsersSquad) => {
+      // Create map
+      this.squadNameMap.set(squad.uid, squad.name)
+
+      // Get the logged in users squad
+      if (squad.ownerID === this.user.uid) {
+        this.usersSquad = squad;
+
+        // Set the list
+        this.teamListForSelect = [...this.usersSquad.teamsList]
+      }
+    });
 
     this.loading = false;
     this.cdf.detectChanges();
@@ -72,9 +76,6 @@ export class MatchupsComponent implements OnInit {
         // Set the name of the squads
         computedResults.forEach(matchup => {
           matchup.selectedSquads.forEach(squad => matchup.matchupTotal += squad.points);
-
-          // TODO: I should just create an object here that can use the ID to show a name
-          matchup.squadName = this.squadsService.usersLeague.squads.find((squad: any) => squad.uid === matchup.squadUID)?.name
         })
 
         return computedResults;
@@ -85,6 +86,12 @@ export class MatchupsComponent implements OnInit {
     }
   }
 
+  public selectionChange(selectedTeam: string, category: string) {
+    // TODO: I need to make the option disabled in the other fields
+    // this.teamListForSelect = this.teamListForSelect.filter(team => team !== selectedTeam)
+    console.log('Team', selectedTeam, category)
+  }
+
   public async setMatchup() {
     try {
       await this.squadsService.setMatchup(this.leagueWeeklyMatchups, 'k08dC6ulgR9xrwH77A0h')
@@ -93,20 +100,20 @@ export class MatchupsComponent implements OnInit {
     }
   }
 
-  private async getLoggedInUserLeague() {
+  private async getLoggedInUserLeague(): Promise<League> {
     if (!this.authService.userData.uid) {
       // confirm that the user is logged in
       this.authService.isLoggedIn;
     }
 
     try {
-      const user = await this.squadsService.getUserInformation(this.authService.userData.uid);
-      const league = await this.squadsService.getLeagueByID(user.data()?.defaultLeague);
+      this.user = await this.squadsService.getUserInformation(this.authService.userData.uid);
+      const league = await this.squadsService.getLeagueByID(this.user.defaultLeague);
 
       return league;
 
     } catch (error) {
-      console.log('Error', error)
+      throw Error((error as Error).message)
     }
   }
 }

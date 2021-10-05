@@ -1,3 +1,4 @@
+import { League, LoggedInUser } from './../../models/league.model';
 import Squad from '../../models/squad.model';
 import { teamStats } from './../../../assets/teamStats';
 import { Injectable } from '@angular/core';
@@ -19,8 +20,20 @@ export class SquadsService {
   private squadsRef: AngularFirestoreCollection<Squad[]>;
 
   public usersSquad: Squad | null = null;
-  public usersLeague: any = {
-    loaded: false
+  public usersLeague: League = {
+    uid: '',
+    leagueName: '',
+    squads: [],
+    users: [],
+    matchups: []
+  };
+
+  public loggedInUser: LoggedInUser = {
+    uid: '',
+    email: '',
+    defaultLeague: '',
+    displayName: '',
+    emailVerified: false
   }
 
   constructor(private db: AngularFirestore, private fireFunctions: AngularFireFunctions, private http: HttpClient) {
@@ -35,18 +48,31 @@ export class SquadsService {
     return this.squadsRef;
 }
 
-public getUserInformation(id: string) {
-  return this.usersCollection.doc(`${id}`).get().toPromise();
+// TODO: Maybe I want to use a getter here? I really just want to use the property above
+public async getUserInformation(id: string) {
+  if (this.loggedInUser.email) {
+    return this.loggedInUser
+  }
+
+  try {
+    const user = (await this.usersCollection.doc(`${id}`).get().toPromise()).data();
+
+    this.loggedInUser = user as LoggedInUser;
+
+    return this.loggedInUser;
+  } catch (error) {
+    throw Error((error as Error).message)
+  }
 }
 
-public async getLeagueByID(id: string) {
-  if (this.usersLeague.loaded) {
+public async getLeagueByID(id: string): Promise<League> {
+  if (this.usersLeague.uid) {
     return this.usersLeague;
   }
 
   try {
     const league = (await this.leaguesCollection.doc(`${id}`).get().toPromise()).data();
-    this.usersLeague = {...league, loaded: true}
+    this.usersLeague = (league as League);
 
     return this.usersLeague;
   } catch (error) {
