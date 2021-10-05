@@ -14,6 +14,8 @@ import { RouterModule, Routes } from '@angular/router';
 import { SquadsListComponent } from './components/squads-list/squads-list.component';
 import { SquadRankingsComponent } from './components/squad-rankings/squad-rankings.component';
 
+import { UserProfileComponent } from './pages/profile/user-profile/user-profile.component';
+
 const routes: Routes = [
   { path: 'sign-in', component: SignInComponent, canActivate: [LoggedInGuard] },
   { path: 'register-user', component: SignUpComponent, canActivate: [LoggedInGuard] },
@@ -21,6 +23,7 @@ const routes: Routes = [
   { path: 'verify-email-address', component: VerifyEmailComponent, canActivate: [LoggedInGuard] },
   {
     path: '', component: HomeComponent, canActivate: [AuthGuard],
+
     children: [
       { path: '', redirectTo: '/games', pathMatch: 'full' },
       { path: 'squads', component: SquadsListComponent },
@@ -28,6 +31,7 @@ const routes: Routes = [
       { path: 'rankings', component: SquadRankingsComponent },
       { path: 'games', component: SquadGamesComponent },
       { path: 'matchups', component: MatchupsComponent },
+      { path: 'profile', component: UserProfileComponent }
     ]
   }
 ];

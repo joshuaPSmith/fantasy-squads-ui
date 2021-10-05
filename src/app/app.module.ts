@@ -47,6 +47,7 @@ import { SquadGamesComponent } from './components/squad-games/squad-games.compon
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HomeComponent } from './pages/home/home.component';
 import { MatchupsComponent } from './pages/matchups/matchups.component';
+import { UserProfileComponent } from './pages/profile/user-profile/user-profile.component';
 
 
 
@@ -68,6 +69,7 @@ import { MatchupsComponent } from './pages/matchups/matchups.component';
     MatchupsComponent,
     HeaderComponent,
     SidenavListComponent,
+    UserProfileComponent,
   ],
   imports: [
     BrowserModule,

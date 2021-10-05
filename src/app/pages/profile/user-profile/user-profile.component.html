@@ -1,0 +1,21 @@
+<div>
+  <mat-card>
+    <mat-card-header>
+      <div mat-card-avatar>
+        <img *ngIf="imageIsPresent();else elseBlock" [src]="userPhoto" class="userPhoto">
+      </div>
+      <mat-card-title>
+        {{ user}}
+      </mat-card-title>
+      <mat-card-subtitle>
+
+      </mat-card-subtitle>
+    </mat-card-header>
+    <mat-form-field>
+
+    </mat-form-field>
+  </mat-card>
+</div>
+<ng-template #elseBlock>
+  <mat-icon>face</mat-icon>
+</ng-template>
