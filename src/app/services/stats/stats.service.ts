@@ -22,27 +22,20 @@ export class StatsService {
         const callable = this.fireFunctions.httpsCallable('getAllStats');
         try {
             return callable({}).toPromise();
-            
+
         } catch (error) {
             console.error(error);
         }
     }
 
-    // public getAllAsPromise(): any {
-    //     return this.db.collection(this.dbPath).get().toPromise();
-    // }
+    public async getGameStatsByWeek(week: number) {
+        const callable = this.fireFunctions.httpsCallable('getGameStatsByWeek2');
+        try {
+            return callable({week: week}).toPromise();
 
-    // public async getTeamStats(team: string): Promise<any> {
-    //     let currentSquads = null;
-    //     this.squadsRef.snapshotChanges().pipe(take(1),).subscribe(squadArray => {
-    //         currentSquads = squadArray.map(squad => {
-    //             return {
-    //                 id: squad.payload.doc.id,
-    //                 ...squad.payload.doc.data()
-    //             } as unknown as Squad
-    //           })
+        } catch (error) {
+            console.error(error);
+        }
+    }
 
-    //     })
-    //     return Promise.resolve(teamStats);
-    // }
 }

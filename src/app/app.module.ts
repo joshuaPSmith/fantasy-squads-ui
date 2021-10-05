@@ -46,6 +46,7 @@ import { FormWrapperComponent } from './components/authentication/form-wrapper/f
 import { SquadGamesComponent } from './components/squad-games/squad-games.component';
 import { ServiceWorkerModule } from '@angular/service-worker';
 import { HomeComponent } from './pages/home/home.component';
+import { MatchupsComponent } from './pages/matchups/matchups.component';
 
 
 
@@ -63,9 +64,10 @@ import { HomeComponent } from './pages/home/home.component';
     VerifyEmailComponent,
     FormWrapperComponent,
     SquadGamesComponent,
+    HomeComponent,
+    MatchupsComponent,
     HeaderComponent,
     SidenavListComponent,
-    HomeComponent
   ],
   imports: [
     BrowserModule,

@@ -1,3 +1,4 @@
+import { MatchupsComponent } from './pages/matchups/matchups.component';
 import { LoggedInGuard } from './guards/logged-in.guard';
 import { HomeComponent } from './pages/home/home.component';
 import { SquadGamesComponent } from './components/squad-games/squad-games.component';
@@ -26,6 +27,7 @@ const routes: Routes = [
       { path: 'standings', component: StandingsComponent },
       { path: 'rankings', component: SquadRankingsComponent },
       { path: 'games', component: SquadGamesComponent },
+      { path: 'matchups', component: MatchupsComponent },
     ]
   }
 ];

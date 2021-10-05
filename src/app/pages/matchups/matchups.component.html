@@ -1,0 +1,29 @@
+<div *ngIf="loading;else matchups">
+  <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+</div>
+
+<ng-template #matchups>
+  <mat-accordion>
+    <mat-expansion-panel *ngFor="let fullWeekMatchups of leagueWeeklyMatchups">
+      <mat-expansion-panel-header>
+        <mat-panel-title>
+          Week: {{fullWeekMatchups.week}}
+        </mat-panel-title>
+      </mat-expansion-panel-header>
+
+      <mat-card *ngFor="let matchup of fullWeekMatchups.squadMatchups" div fxLayout="row"
+        fxLayoutAlign="space-around start">
+        <div *ngFor="let item of matchup.weeklyMatchup">
+          <h3>{{item.squadName}}</h3>
+
+          <mat-list role="list" *ngFor="let test of item.selectedSquads">
+            <mat-list-item role="listitem">{{test.category}} - {{test.team}} - {{test.points}}</mat-list-item>
+          </mat-list>
+
+          <strong>Total: {{item.matchupTotal | number : '1.2-2'}}</strong>
+        </div>
+      </mat-card>
+
+    </mat-expansion-panel>
+  </mat-accordion>
+</ng-template>
