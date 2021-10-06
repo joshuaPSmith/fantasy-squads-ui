@@ -48,6 +48,7 @@ import { ServiceWorkerModule } from '@angular/service-worker';
 import { HomeComponent } from './pages/home/home.component';
 import { MatchupsComponent } from './pages/matchups/matchups.component';
 import { UserProfileComponent } from './pages/profile/user-profile/user-profile.component';
+import { AvatarComponent } from './components/avatar/avatar.component';
 
 
 
@@ -70,6 +71,7 @@ import { UserProfileComponent } from './pages/profile/user-profile/user-profile.
     HeaderComponent,
     SidenavListComponent,
     UserProfileComponent,
+    AvatarComponent,
   ],
   imports: [
     BrowserModule,

@@ -1,6 +1,7 @@
 import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 import { User } from 'src/app/services/authentication/authentication.service';
 import { SquadsService } from 'src/app/services/squads/squads.service';
+import { AvatarComponent } from 'src/app/components/avatar/avatar.component';
 
 @Component({
   selector: 'app-user-profile',

@@ -2,10 +2,10 @@
   <mat-card>
     <mat-card-header>
       <div mat-card-avatar>
-        <img *ngIf="imageIsPresent();else elseBlock" [src]="userPhoto" class="userPhoto">
+        <app-avatar></app-avatar>
       </div>
       <mat-card-title>
-        {{ user}}
+        {{ user }}
       </mat-card-title>
       <mat-card-subtitle>
 
@@ -16,6 +16,4 @@
     </mat-form-field>
   </mat-card>
 </div>
-<ng-template #elseBlock>
-  <mat-icon>face</mat-icon>
-</ng-template>
+

@@ -1,0 +1,6 @@
+<div mat-card-avatar>
+  <img *ngIf="imageIsPresent();else elseBlock" [src]="userPhoto" class="userPhoto">
+</div>
+<ng-template #elseBlock>
+  <mat-icon>face</mat-icon>
+</ng-template>
