@@ -14,12 +14,12 @@
             {{ item.title }}
           </a>
         </li>
-        <mat-divider [vertical]="true"></mat-divider>
-        <li (click)="authService.signOut()">
+        <mat-divider *ngIf="showSignOutLink()" [vertical]="true"></mat-divider>
+        <li *ngIf="showSignOutLink()" (click)="authService.signOut()">
           <a>Sign Out</a>
         </li>
         <li class="header-avatar" [ngClass]="'isRound'">
-          <app-avatar [photoLink]="user.photoURL" [spot]="avatarSpot"></app-avatar>
+          <app-avatar *ngIf="showSignOutLink()" [photoLink]="user.photoURL" [spot]="avatarSpot"></app-avatar>
         </li>
       </ul>
   </div>

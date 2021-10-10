@@ -60,6 +60,17 @@ export class HeaderComponent implements OnInit {
   public onToggleSidenav = () => {
     this.sidenavToggle.emit();
   }
+
+  public showSignOutLink() {
+    //if (!this.authService.userData.uid) {
+      // confirm that the user is logged in
+      //return this.authService.isLoggedIn;
+      if (this.authService.isLoggedIn) {
+      return true
+    } else {
+      return false
+    }
+  }
 }
 
 
