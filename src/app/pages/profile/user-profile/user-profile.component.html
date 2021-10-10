@@ -2,18 +2,12 @@
   <mat-card>
     <mat-card-header>
       <div mat-card-avatar>
-        <app-avatar></app-avatar>
+        <app-avatar [photoLink] = "user.photoURL" [spot]="avatarSpot"></app-avatar>
       </div>
       <mat-card-title>
-        {{ user }}
+        {{ user.displayName }}
       </mat-card-title>
-      <mat-card-subtitle>
-
-      </mat-card-subtitle>
     </mat-card-header>
-    <mat-form-field>
-
-    </mat-form-field>
   </mat-card>
 </div>
 

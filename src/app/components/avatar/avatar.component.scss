@@ -1,3 +1,11 @@
-.userPhoto{
+.avatar{
   width: 30px;
+}
+
+.avatar.isRound{
+  border-radius: 50%;
+}
+
+.avatar.isSquare{
+  width: 100px;
 }

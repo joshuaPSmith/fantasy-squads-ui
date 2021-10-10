@@ -1,7 +1,9 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Directive } from '@angular/core';
 import { User } from 'src/app/services/authentication/authentication.service';
 import { SquadsService } from 'src/app/services/squads/squads.service';
 import { AvatarComponent } from 'src/app/components/avatar/avatar.component';
+import { LoggedInUser } from 'src/app/models/league.model';
+import { AuthService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'app-user-profile',
@@ -11,16 +13,43 @@ import { AvatarComponent } from 'src/app/components/avatar/avatar.component';
 })
 export class UserProfileComponent implements OnInit {
 
-  user: string = "Justin";
-  userPhoto: string = "https://static.thenounproject.com/png/2112137-200.png";
+  public user!: LoggedInUser;
 
-  constructor() { }
+  //Sets the avatar styling to use the user-profile CSS class
+  public avatarSpot = 'user profile'
+
+
+  constructor(
+    private squadsService: SquadsService,
+    private authService: AuthService
+    ) { }
 
   ngOnInit(): void {
+    this.initContainer();
   }
 
-  imageIsPresent() {
-    return this.userPhoto;
+  public async initContainer() {
+    const userPhotoLink = (await this.getLoggedInUserInfo()).photoLink;
+    const userDisplayName = (await this.getLoggedInUserInfo()).name;
   }
 
+  public async getLoggedInUserInfo() {
+    if (!this.authService.userData.uid) {
+        // confirm that the user is logged in
+        this.authService.isLoggedIn;
+      }
+
+    try {
+      this.user = await this.squadsService.getUserInformation(this.authService.userData.uid);
+      const userInfo = {
+        name: this.user.displayName,
+        photoLink: this.user.photoURL
+      }
+
+      return userInfo;
+
+    } catch (error) {
+      throw Error((error as Error).message)
+    }
+  }
 }

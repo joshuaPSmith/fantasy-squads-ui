@@ -18,8 +18,8 @@
         <li (click)="authService.signOut()">
           <a>Sign Out</a>
         </li>
-        <li>
-          <app-avatar></app-avatar>
+        <li class="header-avatar" [ngClass]="'isRound'">
+          <app-avatar [photoLink]="user.photoURL" [spot]="avatarSpot"></app-avatar>
         </li>
       </ul>
   </div>

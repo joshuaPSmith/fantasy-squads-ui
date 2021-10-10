@@ -1,4 +1,4 @@
-import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
+import { Component, OnInit, ChangeDetectionStrategy, Input, Output } from '@angular/core';
 
 @Component({
   selector: 'app-avatar',
@@ -8,16 +8,43 @@ import { Component, OnInit, ChangeDetectionStrategy } from '@angular/core';
 })
 export class AvatarComponent implements OnInit {
 
-  user: string = "Justin";
-  userPhoto: string = "https://static.thenounproject.com/png/2112137-200.png";
+  @Input()
+  photoLink: string | undefined = ''
+
+  @Input() spot: string | undefined
 
   constructor() { }
 
   ngOnInit(): void {
   }
 
+  /**
+   * Determines whether the logged in user has a profile image.
+   * If so, that image is displayed.
+   * If not, a generic icon is displayed
+   */
   imageIsPresent() {
-    return this.userPhoto;
+    if (this.photoLink) {
+      return true
+    } else {
+      return false
+    }
   }
 
+  //Gets the location of the Avatar
+  public classBasedOnLocation() {
+    const spot = this.spot
+    return this.avatarImageClass(spot);
+  }
+
+  //Changes the CSS style based on the location of the Avatar
+  public avatarImageClass(location?: string) {
+    if (location === 'user profile') {
+      return 'isSquare'
+    } else if (location === 'header') {
+      return 'isRound'
+    } else {
+      return 'avatar'
+    }
+  }
 }
