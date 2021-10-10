@@ -22,6 +22,7 @@ export class AvatarComponent implements OnInit {
    * Determines whether the logged in user has a profile image.
    * If so, that image is displayed.
    * If not, a generic icon is displayed
+   * TODO: Get a better user-has-no-image pic
    */
   imageIsPresent() {
     if (this.photoLink) {
