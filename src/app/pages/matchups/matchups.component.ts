@@ -2,7 +2,7 @@ import { League, LoggedInUser, UsersSquad } from './../../models/league.model';
 import { AuthService } from './../../services/authentication/authentication.service';
 import { SquadsService } from './../../services/squads/squads.service';
 import { Matchups, WeeklyMatchupInfo } from './../../models/matchups.model';
-import { getStatsForCurrentMatchup, getMatchUpValuesForTeams, week6 } from './../../helper/matchups.helper';
+import { getStatsForCurrentMatchup, getMatchUpValuesForTeams, week5 } from './../../helper/matchups.helper';
 import { StatsService } from './../../services/stats/stats.service';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
 
@@ -21,6 +21,12 @@ export class MatchupsComponent implements OnInit {
   public usersSquad!: UsersSquad;
   public teamListForSelect: Array<string> = [];
 
+  public categoryTeamDefinition = {
+    rushingTeam: 'Rushing Team',
+    passingTeam: 'Passing Team',
+    defensiveTeam: 'Defensive Team'
+  }
+
   constructor(
     private statsService: StatsService,
     private squadsService: SquadsService,
@@ -35,6 +41,8 @@ export class MatchupsComponent implements OnInit {
     this.loading = true;
     const league = await this.getLoggedInUserLeague();
     this.leagueWeeklyMatchups = league?.matchups;
+
+    // this.leagueWeeklyMatchups.push(week5);
 
     this.leagueWeeklyMatchups.forEach(weeklyMatchup => {
       if (weeklyMatchup.past) {
@@ -73,7 +81,7 @@ export class MatchupsComponent implements OnInit {
         // Now that we have the stats we need to calculate the scores
         let computedResults = getMatchUpValuesForTeams(matchups.weeklyMatchup, matchupTeamStats);
 
-        // Set the name of the squads
+        // Compute the total points
         computedResults.forEach(matchup => {
           matchup.selectedSquads.forEach(squad => matchup.matchupTotal += squad.points);
         })
@@ -92,6 +100,7 @@ export class MatchupsComponent implements OnInit {
     console.log('Team', selectedTeam, category)
   }
 
+  // TODO remove this later. Just using as a helper now
   public async setMatchup() {
     try {
       await this.squadsService.setMatchup(this.leagueWeeklyMatchups, 'k08dC6ulgR9xrwH77A0h')

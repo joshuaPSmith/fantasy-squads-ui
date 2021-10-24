@@ -1,5 +1,5 @@
 import { teamStats } from './../../assets/teamStats';
-import { MatchUpMetrics, Matchups, GameTeamStat, GameStat, MatchupScoring, WeeklyMatchupInfo } from './../models/matchups.model';
+import { MatchUpMetrics, Matchups, GameTeamStat, GameStat, MatchupScoring, WeeklyMatchupInfo, ExpandedMatchup } from './../models/matchups.model';
 
 const matchupCategories: any = {
   'passingTeam': ['netPassingYards', 'passingTDs'],
@@ -100,14 +100,24 @@ export const getStatsForCurrentMatchup = (currentMatchup: Array<Matchups>, games
 
 export const getMatchUpValuesForTeams = (currentMatch: Array<Matchups>, statsMap: Map<string, Array<{ "category": "string", "stat": "string" }>>) => {
   currentMatch.forEach(matchup => {
-
+    // const expandedMatchup: ExpandedMatchup = { ...matchup, categoryBreakdown: []}
     matchup.selectedSquads.forEach(matchupInfo => {
       const teamStats = statsMap.get(matchupInfo.team);
+      matchupInfo.categoryBreakdown = [];
 
-      teamStats?.forEach(stat => {
-        const metric = (matchUpMetrics as any)[matchupInfo.category][stat.category];
-        matchupInfo.points += calculatePoints(metric, parseInt(stat.stat))
+      teamStats?.forEach(categoryStat => {
+        // TODO add type
+        const metric = (matchUpMetrics as any)[matchupInfo.category][categoryStat.category];
+        const calculatedPoints = calculatePoints(metric, parseInt(categoryStat.stat));
+        console.log('#POINTS#', categoryStat.category, categoryStat.stat)
+        const test = {subCategory: metric.name, pointTotal: calculatedPoints, statTotal: parseInt(categoryStat.stat)};
+        console.log('#TEST#', test);
+        matchupInfo.categoryBreakdown?.push(test)
+
+        matchupInfo.points += calculatedPoints;
       })
+
+      console.log('#WHY#', matchupInfo.categoryBreakdown)
     })
   });
 
@@ -161,9 +171,57 @@ const makeMapOfMatchupTeams = (currentMatchup: Array<Matchups>) => {
 //     ]
 //   }
 // }
-// export const week5: WeeklyMatchupInfo = {
-//   week: 5,
-//   active: true,
+export const week5: WeeklyMatchupInfo = {
+  week: 5,
+  active: false,
+  past: true,
+  squadMatchups:
+    [
+      {
+        weeklyMatchup: [
+          {
+            squadUID: 'mLjGwubov66ji4fPIRSI', //Josh
+            selectedSquads:
+              [{ category: 'rushingTeam', team: 'Kent State', points: 0 },
+              { category: 'passingTeam', team: 'Arkansas State', points: 0 },
+              { category: 'defensiveTeam', team: 'Texas A&M', points: 0 }],
+            matchupTotal: 0
+          },
+          {
+            squadUID: '52X2QiXz7OCrNRpjjt2U', //Tyler D
+            selectedSquads:
+              [{ category: 'rushingTeam', team: 'Appalachian State', points: 0 },
+              { category: 'passingTeam', team: 'North Carolina', points: 0 },
+              { category: 'defensiveTeam', team: 'Ohio State', points: 0 }],
+            matchupTotal: 0
+          },
+        ]
+      },
+      {
+        weeklyMatchup: [
+          {
+            squadUID: 'o6WsnetFzo0xfi0DgPKa', //Justin
+            selectedSquads:
+              [{ category: 'rushingTeam', team: 'Army', points: 0 },
+              { category: 'passingTeam', team: 'Notre Dame', points: 0 },
+              { category: 'defensiveTeam', team: 'BYU', points: 0 }],
+            matchupTotal: 0
+          },
+          {
+            squadUID: 'EcdJ4qnzOVITIEJUPpyP', //Ben
+            selectedSquads:
+              [{ category: 'rushingTeam', team: 'Coastal Carolina', points: 0 },
+              { category: 'passingTeam', team: 'Mississippi State', points: 0 },
+              { category: 'defensiveTeam', team: 'Clemson', points: 0 }],
+            matchupTotal: 0
+          },
+        ]
+      }
+    ]
+}
+// export const week6: WeeklyMatchupInfo = {
+//   week: 6,
+//   active: false,
 //   past: false,
 //   squadMatchups:
 //     [
@@ -173,22 +231,10 @@ const makeMapOfMatchupTeams = (currentMatchup: Array<Matchups>) => {
 //             squadUID: 'mLjGwubov66ji4fPIRSI', //Josh
 //             selectedSquads:
 //               [{ category: 'rushingTeam', team: 'Kent State', points: 0 },
-//               { category: 'passingTeam', team: 'Arkansas State', points: 0 },
-//               { category: 'defensiveTeam', team: 'Texas A&M', points: 0 }],
+//               { category: 'passingTeam', team: 'Nevada', points: 0 },
+//               { category: 'defensiveTeam', team: 'Cincinnati', points: 0 }],
 //             matchupTotal: 0
 //           },
-//           {
-//             squadUID: '52X2QiXz7OCrNRpjjt2U', //Tyler D
-//             selectedSquads:
-//               [{ category: 'rushingTeam', team: 'Appalachian State', points: 0 },
-//               { category: 'passingTeam', team: 'North Carolina', points: 0 },
-//               { category: 'defensiveTeam', team: 'Ohio State', points: 0 }],
-//             matchupTotal: 0
-//           },
-//         ]
-//       },
-//       {
-//         weeklyMatchup: [
 //           {
 //             squadUID: 'o6WsnetFzo0xfi0DgPKa', //Justin
 //             selectedSquads:
@@ -197,66 +243,30 @@ const makeMapOfMatchupTeams = (currentMatchup: Array<Matchups>) => {
 //               { category: 'defensiveTeam', team: 'BYU', points: 0 }],
 //             matchupTotal: 0
 //           },
+//         ]
+//       },
+//       {
+//         weeklyMatchup: [
+//           {
+//             squadUID: '52X2QiXz7OCrNRpjjt2U', //Tyler
+//             selectedSquads:
+//               [{ category: 'rushingTeam', team: 'Arizona State', points: 0 },
+//               { category: 'passingTeam', team: 'Ohio State', points: 0 },
+//               { category: 'defensiveTeam', team: 'Penn State', points: 0 }],
+//             matchupTotal: 0
+//           },
 //           {
 //             squadUID: 'EcdJ4qnzOVITIEJUPpyP', //Ben
 //             selectedSquads:
 //               [{ category: 'rushingTeam', team: 'Coastal Carolina', points: 0 },
-//               { category: 'passingTeam', team: 'Mississippi State', points: 0 },
-//               { category: 'defensiveTeam', team: 'Clemson', points: 0 }],
+//               { category: 'passingTeam', team: 'Marshall', points: 0 },
+//               { category: 'defensiveTeam', team: 'Wisconsin', points: 0 }],
 //             matchupTotal: 0
 //           },
 //         ]
 //       }
 //     ]
 // }
-export const week6: WeeklyMatchupInfo = {
-  week: 6,
-  active: true,
-  past: false,
-  squadMatchups:
-    [
-      {
-        weeklyMatchup: [
-          {
-            squadUID: 'mLjGwubov66ji4fPIRSI', //Josh
-            selectedSquads:
-              [{ category: 'rushingTeam', team: '', points: 0 },
-              { category: 'passingTeam', team: '', points: 0 },
-              { category: 'defensiveTeam', team: '', points: 0 }],
-            matchupTotal: 0
-          },
-          {
-            squadUID: 'o6WsnetFzo0xfi0DgPKa', //Justin
-            selectedSquads:
-              [{ category: 'rushingTeam', team: '', points: 0 },
-              { category: 'passingTeam', team: '', points: 0 },
-              { category: 'defensiveTeam', team: '', points: 0 }],
-            matchupTotal: 0
-          },
-        ]
-      },
-      {
-        weeklyMatchup: [
-          {
-            squadUID: '52X2QiXz7OCrNRpjjt2U', //Tyler
-            selectedSquads:
-              [{ category: 'rushingTeam', team: '', points: 0 },
-              { category: 'passingTeam', team: '', points: 0 },
-              { category: 'defensiveTeam', team: '', points: 0 }],
-            matchupTotal: 0
-          },
-          {
-            squadUID: 'EcdJ4qnzOVITIEJUPpyP', //Ben
-            selectedSquads:
-              [{ category: 'rushingTeam', team: '', points: 0 },
-              { category: 'passingTeam', team: '', points: 0 },
-              { category: 'defensiveTeam', team: '', points: 0 }],
-            matchupTotal: 0
-          },
-        ]
-      }
-    ]
-}
 
 const categories = [
   'tacklesForLoss',

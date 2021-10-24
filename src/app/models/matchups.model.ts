@@ -11,10 +11,19 @@ export interface Matchups {
   {
     category: string,
     team: string,
-    points: number
+    points: number,
+    categoryBreakdown?: Array<{
+      statTotal: number,
+      pointTotal: number,
+      subCategory: string
+    }>
   }
   >,
   matchupTotal: number
+}
+
+export interface ExpandedMatchup extends Matchups {
+
 }
 
 export interface MatchUpMetrics {
