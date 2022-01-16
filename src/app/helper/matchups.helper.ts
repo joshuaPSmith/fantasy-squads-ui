@@ -1,5 +1,5 @@
 import { teamStats } from './../../assets/teamStats';
-import { MatchUpMetrics, Matchups, GameTeamStat, GameStat, MatchupScoring, WeeklyMatchupInfo, ExpandedMatchup } from './../models/matchups.model';
+import { MatchUpMetrics, SquadMatchupInformation, GameTeamStat, GameStat, MatchupScoring, WeeklyMatchupInfo, ExpandedMatchup } from './../models/matchups.model';
 
 const matchupCategories: any = {
   'passingTeam': ['netPassingYards', 'passingTDs'],
@@ -64,7 +64,7 @@ const matchUpMetrics: MatchUpMetrics = {
 }
 
 
-export const getStatsForCurrentMatchup = (currentMatchup: Array<Matchups>, gamesStats: Array<GameStat>) => {
+export const getStatsForCurrentMatchup = (currentMatchup: Array<SquadMatchupInformation>, gamesStats: Array<GameStat>) => {
   // get map of all of the teams used in current matchups so we know to use them
   const teamsMap = makeMapOfMatchupTeams(currentMatchup);
 
@@ -98,10 +98,10 @@ export const getStatsForCurrentMatchup = (currentMatchup: Array<Matchups>, games
   return statsMap;
 }
 
-export const getMatchUpValuesForTeams = (currentMatch: Array<Matchups>, statsMap: Map<string, Array<{ "category": "string", "stat": "string" }>>) => {
+export const getMatchUpValuesForTeams = (currentMatch: Array<SquadMatchupInformation>, statsMap: Map<string, Array<{ "category": "string", "stat": "string" }>>) => {
   currentMatch.forEach(matchup => {
     // const expandedMatchup: ExpandedMatchup = { ...matchup, categoryBreakdown: []}
-    matchup.selectedSquads.forEach(matchupInfo => {
+    matchup.selectedTeam.forEach(matchupInfo => {
       const teamStats = statsMap.get(matchupInfo.team);
       matchupInfo.categoryBreakdown = [];
 
@@ -133,11 +133,11 @@ const calculatePoints = (metric: MatchupScoring, value: number) => {
   }
 }
 
-const makeMapOfMatchupTeams = (currentMatchup: Array<Matchups>) => {
+const makeMapOfMatchupTeams = (currentMatchup: Array<SquadMatchupInformation>) => {
   const teamsMap = new Map();
 
   currentMatchup.forEach(matchup => {
-    matchup.selectedSquads.forEach(teamInfo => {
+    matchup.selectedTeam.forEach(teamInfo => {
       teamsMap.set(teamInfo.team, teamInfo.category)
     })
   });
@@ -181,7 +181,7 @@ export const week5: WeeklyMatchupInfo = {
         weeklyMatchup: [
           {
             squadUID: 'mLjGwubov66ji4fPIRSI', //Josh
-            selectedSquads:
+            selectedTeam:
               [{ category: 'rushingTeam', team: 'Kent State', points: 0 },
               { category: 'passingTeam', team: 'Arkansas State', points: 0 },
               { category: 'defensiveTeam', team: 'Texas A&M', points: 0 }],
@@ -189,7 +189,7 @@ export const week5: WeeklyMatchupInfo = {
           },
           {
             squadUID: '52X2QiXz7OCrNRpjjt2U', //Tyler D
-            selectedSquads:
+            selectedTeam:
               [{ category: 'rushingTeam', team: 'Appalachian State', points: 0 },
               { category: 'passingTeam', team: 'North Carolina', points: 0 },
               { category: 'defensiveTeam', team: 'Ohio State', points: 0 }],
@@ -201,7 +201,7 @@ export const week5: WeeklyMatchupInfo = {
         weeklyMatchup: [
           {
             squadUID: 'o6WsnetFzo0xfi0DgPKa', //Justin
-            selectedSquads:
+            selectedTeam:
               [{ category: 'rushingTeam', team: 'Army', points: 0 },
               { category: 'passingTeam', team: 'Notre Dame', points: 0 },
               { category: 'defensiveTeam', team: 'BYU', points: 0 }],
@@ -209,7 +209,7 @@ export const week5: WeeklyMatchupInfo = {
           },
           {
             squadUID: 'EcdJ4qnzOVITIEJUPpyP', //Ben
-            selectedSquads:
+            selectedTeam:
               [{ category: 'rushingTeam', team: 'Coastal Carolina', points: 0 },
               { category: 'passingTeam', team: 'Mississippi State', points: 0 },
               { category: 'defensiveTeam', team: 'Clemson', points: 0 }],

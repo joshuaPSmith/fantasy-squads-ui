@@ -17,7 +17,7 @@
         <div *ngFor="let item of matchup.weeklyMatchup">
           <h3>{{squadNameMap.get(item.squadUID)}}</h3>
 
-          <mat-list role="list" *ngFor="let squadTeamInfo of item.selectedSquads">
+          <mat-list role="list" *ngFor="let squadTeamInfo of item.selectedTeam">
             <span class="breakdown">
             Breakdown:
             <mat-list *ngFor="let test of squadTeamInfo.categoryBreakdown">
@@ -26,23 +26,9 @@
           </span>
             <mat-list-item class="team-section" role="listitem">
               {{squadTeamInfo.category}} -
-              <!-- Make sure its your squad and that this is the active week  -->
               <!-- TODO need new component -->
-              <span *ngIf="fullWeekMatchups.active && item.squadUID === usersSquad.uid;else team">
-                <mat-form-field appearance="fill">
-                  <mat-label>Select team</mat-label>
-                  <mat-select
-                  [(value)]="squadTeamInfo.team"
-                  (selectionChange)="selectionChange($event.value, squadTeamInfo.category)">
-                    <mat-option *ngFor="let team of teamListForSelect" [value]="team">{{team}}</mat-option>
-                  </mat-select>
-                </mat-form-field>
-              </span>
-              <ng-template #team>
                 {{squadTeamInfo.team}}
-              </ng-template>
               -
-
               {{squadTeamInfo.points | number : '1.2-2'}}</mat-list-item>
           </mat-list>
 

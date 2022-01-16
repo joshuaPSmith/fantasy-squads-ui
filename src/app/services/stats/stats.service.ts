@@ -38,4 +38,14 @@ export class StatsService {
         }
     }
 
+    public async getAllRecords() {
+        const callable = this.fireFunctions.httpsCallable('getAllTeamRecords');
+        try {
+            return callable({}).toPromise();
+
+        } catch (error) {
+            console.error(error);
+        }
+    }
+
 }

@@ -1,3 +1,4 @@
+import { pruneRecords, calculateSquadWins } from './../../helper/records.helper';
 import { SquadsService } from './../../services/squads/squads.service';
 import { pruneStats, rankSquads, rankSquadsPerCategory, getSquadStandings, SquadRankByCategory, SquadStandingsRank, DetailedSquads } from './../../helper/stats.helper';
 import Squad from 'src/app/models/squad.model';
@@ -6,18 +7,6 @@ import { ChangeDetectorRef, Component, OnInit, ChangeDetectionStrategy } from '@
 import { map } from 'rxjs/operators';
 import { MatSnackBar } from '@angular/material/snack-bar';
 
-// export enum categoryEnum {
-//   'totalYards' = 'Total Yards',
-//     'possessionTime' = 'Possession Time',
-//     'interceptionYards' = 'Interception Yards',
-//     'sacks' = 'Sacks',
-//     'fumblesRecovered' = 'Fumbles Recovered',
-//     'netPassingYards' = 'Net Passing Yards',
-//     'rushingYards' = 'Rushing Yards',
-//     'fourthDownConversions' = 'Fourth Down Conversions',
-//     'rushingTDs' = 'Rushing TDs',
-//     'passingTDs' = 'Passing TDs'
-// }
 @Component({
   selector: 'app-squad-rankings',
   templateUrl: './squad-rankings.component.html',
@@ -29,8 +18,10 @@ export class SquadRankingsComponent implements OnInit {
   public squadStats: DetailedSquads[] = [];
   public squadRankings: SquadRankByCategory[] = [];
   public squadStandings: SquadStandingsRank[] = [];
+
   public statsVisible = false;
   public rankingsVisible = false;
+  public winsCalculated = false;
   public loadingData = false;
   public step = 0;
 
@@ -118,6 +109,23 @@ export class SquadRankingsComponent implements OnInit {
     this.squadStandings = getSquadStandings(this.squadRankings);
     this.rankingsVisible = false;
 
+    this.loadingData = false;
+    this.cdf.detectChanges();
+  }
+
+  public async getRecords() {
+    this.loadingData = true;
+    this.cdf.detectChanges();
+
+    const allRecords = await this.statsService.getAllRecords();
+
+    const prunedRecords = pruneRecords(allRecords.result, this.squads as Squad[]);
+
+    const squadWins = calculateSquadWins(prunedRecords, this.squads as Squad[]);
+
+    this.squads?.forEach(squad => squad.winPoints = squadWins.get(squad.name))
+
+    this.winsCalculated = true;
     this.loadingData = false;
     this.cdf.detectChanges();
   }

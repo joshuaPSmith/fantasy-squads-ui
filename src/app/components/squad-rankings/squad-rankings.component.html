@@ -2,6 +2,7 @@
 <button mat-raised-button color="primary" *ngIf="step > 0" (click)="getStats()">Get Stats</button>
 <button mat-raised-button color="accent" *ngIf="step === 2" (click)="getRankings()">Get Ranking</button>
 <button mat-raised-button color="accent" *ngIf="squadRankings?.length" (click)="getStandings()">Get Standings</button>
+<button mat-raised-button color="accent" (click)="getRecords()">Get Records</button>
 </div>
 
 <div *ngIf="squadStandings?.length">
@@ -50,6 +51,14 @@
             </ul>
         </mat-expansion-panel>
     </mat-accordion>
+</div>
+<div *ngIf="winsCalculated">
+  <ul>
+    <li *ngFor="let squad of squads">
+      {{squad.name}} - {{squad.winPoints}}
+    </li>
+  </ul>
+
 </div>
 
 <div *ngIf="loadingData">

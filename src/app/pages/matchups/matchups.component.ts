@@ -1,7 +1,7 @@
 import { League, LoggedInUser, UsersSquad } from './../../models/league.model';
 import { AuthService } from './../../services/authentication/authentication.service';
 import { SquadsService } from './../../services/squads/squads.service';
-import { Matchups, WeeklyMatchupInfo } from './../../models/matchups.model';
+import { SquadMatchupInformation, WeeklyMatchupInfo } from './../../models/matchups.model';
 import { getStatsForCurrentMatchup, getMatchUpValuesForTeams, week5 } from './../../helper/matchups.helper';
 import { StatsService } from './../../services/stats/stats.service';
 import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@angular/core';
@@ -14,7 +14,7 @@ import { Component, OnInit, ChangeDetectionStrategy, ChangeDetectorRef } from '@
 })
 export class MatchupsComponent implements OnInit {
   public loading = false;
-  public matchupResults: Array<Matchups> = [];
+  public matchupResults: Array<SquadMatchupInformation> = [];
   public leagueWeeklyMatchups: Array<WeeklyMatchupInfo> = [];
   public squadNameMap: Map<string, string> = new Map();
   public user!: LoggedInUser;
@@ -68,23 +68,34 @@ export class MatchupsComponent implements OnInit {
     this.cdf.detectChanges();
   }
 
-  public async getStatsForWeek(week: number, weeklyMatchups: Array<{ weeklyMatchup: Array<Matchups> }>) {
+  public async getStatsForWeek(week: number, weeklyMatchups: Array<{ weeklyMatchup: Array<SquadMatchupInformation> }>) {
     try {
       const results = (await this.statsService.getGameStatsByWeek(week)).result;
 
-      // TODO This is something I need to look at. Its updating the object for me.
+      let winningSquad = {
+        id: '',
+        points: 0
+      };
+      // TODO This is something I need to look at. Its updating the object for me. I need to return it
       // Its very possible this is not needed anyways in the UI and should be on the API
-      const test = weeklyMatchups.map(matchups => {
+      const test = weeklyMatchups.map(squadMatchup => {
         // work through each one
-        const matchupTeamStats = getStatsForCurrentMatchup(matchups.weeklyMatchup, results);
+        const matchupTeamStats = getStatsForCurrentMatchup(squadMatchup.weeklyMatchup, results);
 
         // Now that we have the stats we need to calculate the scores
-        let computedResults = getMatchUpValuesForTeams(matchups.weeklyMatchup, matchupTeamStats);
+        let computedResults = getMatchUpValuesForTeams(squadMatchup.weeklyMatchup, matchupTeamStats);
 
         // Compute the total points
         computedResults.forEach(matchup => {
-          matchup.selectedSquads.forEach(squad => matchup.matchupTotal += squad.points);
+          matchup.selectedTeam.forEach(squad => matchup.matchupTotal += squad.points);
+
+          if (matchup.matchupTotal > winningSquad.points) {
+            winningSquad.id = matchup.squadUID
+            winningSquad.points = matchup.matchupTotal
+          }
         })
+
+        console.log('Winner', winningSquad)
 
         return computedResults;
       })
