@@ -22,6 +22,7 @@ export class SquadRankingsComponent implements OnInit {
   public statsVisible = false;
   public rankingsVisible = false;
   public winsCalculated = false;
+  public finalStandingsCalculated = false;
   public loadingData = false;
   public step = 0;
 
@@ -88,25 +89,45 @@ export class SquadRankingsComponent implements OnInit {
 
     this.loadingData = false;
     this.cdf.detectChanges();
+
+    return this.squadStats;
   }
 
-  public getRankings() {
+  public async getRankings() {
     this.loadingData = true;
     this.cdf.detectChanges();
     // TODO do a better job with the types. Its easier to display arrays
+
+    if (!this.squadStats.length) {
+      //get the stats
+      await this.getStats();
+    }
+
     this.squadRankings = rankSquadsPerCategory(Object.values(this.squadStats));
 
     this.rankingsVisible = true;
     this.statsVisible = false;
     this.loadingData = false;
     this.cdf.detectChanges();
+
+    return this.squadRankings;
   }
 
-  public getStandings() {
+  public async getStandings() {
     this.loadingData = true;
     this.cdf.detectChanges();
 
+    if (!this.squadRankings.length) {
+      // Get the rankings
+      await this.getRankings();
+    }
+
     this.squadStandings = getSquadStandings(this.squadRankings);
+    const standingsMap = new Map();
+    this.squadStandings.forEach(standing => standingsMap.set(standing.squadName, standing.squadStandings));
+
+    this.squads?.forEach(squad => squad.standingsPoints = standingsMap.get(squad.name));
+
     this.rankingsVisible = false;
 
     this.loadingData = false;
@@ -127,6 +148,30 @@ export class SquadRankingsComponent implements OnInit {
 
     this.winsCalculated = true;
     this.loadingData = false;
+    this.cdf.detectChanges();
+  }
+
+  public async getFinalStandings() {
+    this.loadingData = true;
+    if (!this.squadStandings.length) {
+      //calculate the stats
+      await this.getStandings();
+
+      console.log('CALLED')
+
+      console.log(this.squadStandings)
+    }
+
+    if (!this.winsCalculated) {
+      await this.getRecords();
+    }
+
+    this.squads?.forEach(squad => squad.totalPoints = (squad.winPoints as number) + (squad.standingsPoints as number));
+
+    this.squads?.sort((a,b) => b.totalPoints as number -( a.totalPoints as number));
+
+    this.loadingData = false;
+    this.finalStandingsCalculated = true;
     this.cdf.detectChanges();
   }
 

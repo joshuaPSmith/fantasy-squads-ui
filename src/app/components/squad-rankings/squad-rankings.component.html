@@ -3,8 +3,21 @@
 <button mat-raised-button color="accent" *ngIf="step === 2" (click)="getRankings()">Get Ranking</button>
 <button mat-raised-button color="accent" *ngIf="squadRankings?.length" (click)="getStandings()">Get Standings</button>
 <button mat-raised-button color="accent" (click)="getRecords()">Get Records</button>
+<button mat-raised-button color="accent" (click)="getFinalStandings()">Get Final</button>
 </div>
 
+<div *ngIf="finalStandingsCalculated">
+  <ul>
+    <li *ngFor="let squad of squads">
+      {{squad.name}}
+      <ul>
+        <li>Win: {{squad.winPoints}}</li>
+        <li>Standings: {{squad.standingsPoints}}</li>
+        <li>Total: {{squad.totalPoints}}</li>
+      </ul>
+    </li>
+  </ul>
+</div>
 <div *ngIf="squadStandings?.length">
     <ol>
         <li *ngFor="let squadStanding of squadStandings">

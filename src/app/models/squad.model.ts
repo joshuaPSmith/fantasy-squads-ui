@@ -3,4 +3,6 @@ export default interface Squad {
     name: string;
     teamsList: Array<string>;
     winPoints?: number;
+    standingsPoints?: number;
+    totalPoints?: number;
   }
