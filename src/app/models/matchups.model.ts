@@ -7,7 +7,7 @@ export interface WeeklyMatchupInfo {
 
 export interface SquadMatchupInformation {
   squadUID: string,
-  selectedTeam: Array<
+  selectedSquads: Array<
   {
     category: string,
     team: string,

@@ -87,7 +87,7 @@ export class MatchupsComponent implements OnInit {
 
         // Compute the total points
         computedResults.forEach(matchup => {
-          matchup.selectedTeam.forEach(squad => matchup.matchupTotal += squad.points);
+          matchup.selectedSquads.forEach(squad => matchup.matchupTotal += squad.points);
 
           if (matchup.matchupTotal > winningSquad.points) {
             winningSquad.id = matchup.squadUID

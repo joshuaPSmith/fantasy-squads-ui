@@ -15,9 +15,9 @@
       <mat-card *ngFor="let matchup of fullWeekMatchups.squadMatchups" div fxLayout="row"
         fxLayoutAlign="space-around start">
         <div *ngFor="let item of matchup.weeklyMatchup">
-          <h3>{{squadNameMap.get(item.squadUID)}}</h3>
+          <h3>{{squadNameMap.get(item.squadUID)}}</h3> - <strong>Total: {{item.matchupTotal | number : '1.2-2'}}</strong>
 
-          <mat-list role="list" *ngFor="let squadTeamInfo of item.selectedTeam">
+          <mat-list role="list" *ngFor="let squadTeamInfo of item.selectedSquads">
             <span class="breakdown">
             Breakdown:
             <mat-list *ngFor="let test of squadTeamInfo.categoryBreakdown">
@@ -31,8 +31,6 @@
               -
               {{squadTeamInfo.points | number : '1.2-2'}}</mat-list-item>
           </mat-list>
-
-          <strong>Total: {{item.matchupTotal | number : '1.2-2'}}</strong>
         </div>
       </mat-card>
 

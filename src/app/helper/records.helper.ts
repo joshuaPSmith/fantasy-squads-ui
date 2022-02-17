@@ -50,12 +50,26 @@ export const calculateSquadWins = (recordsMap: Map<string, TeamRecord>, squads: 
   squads.forEach(squad => {
     squadWinsMap.set(squad.name, 0);
     squad.teamsList.forEach(team => {
+      // Get the wins for the team
       const wins = recordsMap.get(team)?.total.wins;
-      const squadPoints = squadWinsMap.get(squad.name) + wins;
 
+      // Save the current state we have in the map
+      let squadRecords = squadWinsMap.get(squad.name);
+
+      // Set a new object if there isn't one
+      squadRecords = squadRecords ? squadRecords : {};
+
+      // Get new value for wins
+      const squadPoints = squadRecords.total + wins;
+
+      squadRecords.team = wins;
+      squadRecords.total = squadPoints;
+      // Set the new value for the map
       squadWinsMap.set(squad.name, squadPoints);
+
     });
   });
 
+  console.log(squadWinsMap)
   return squadWinsMap;
 }

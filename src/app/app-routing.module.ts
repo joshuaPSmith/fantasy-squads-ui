@@ -13,6 +13,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 import { SquadsListComponent } from './components/squads-list/squads-list.component';
 import { SquadRankingsComponent } from './components/squad-rankings/squad-rankings.component';
+import { RosterComponent } from './pages/roster/roster.component';
 
 const routes: Routes = [
   { path: 'sign-in', component: SignInComponent, canActivate: [LoggedInGuard] },
@@ -28,6 +29,7 @@ const routes: Routes = [
       { path: 'rankings', component: SquadRankingsComponent },
       { path: 'games', component: SquadGamesComponent },
       { path: 'matchups', component: MatchupsComponent },
+      { path: 'roster', component: RosterComponent },
     ]
   }
 ];

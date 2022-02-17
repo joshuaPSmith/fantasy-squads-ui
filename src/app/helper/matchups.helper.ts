@@ -101,7 +101,7 @@ export const getStatsForCurrentMatchup = (currentMatchup: Array<SquadMatchupInfo
 export const getMatchUpValuesForTeams = (currentMatch: Array<SquadMatchupInformation>, statsMap: Map<string, Array<{ "category": "string", "stat": "string" }>>) => {
   currentMatch.forEach(matchup => {
     // const expandedMatchup: ExpandedMatchup = { ...matchup, categoryBreakdown: []}
-    matchup.selectedTeam.forEach(matchupInfo => {
+    matchup.selectedSquads.forEach(matchupInfo => {
       const teamStats = statsMap.get(matchupInfo.team);
       matchupInfo.categoryBreakdown = [];
 
@@ -137,7 +137,7 @@ const makeMapOfMatchupTeams = (currentMatchup: Array<SquadMatchupInformation>) =
   const teamsMap = new Map();
 
   currentMatchup.forEach(matchup => {
-    matchup.selectedTeam.forEach(teamInfo => {
+    matchup.selectedSquads.forEach(teamInfo => {
       teamsMap.set(teamInfo.team, teamInfo.category)
     })
   });
@@ -181,7 +181,7 @@ export const week5: WeeklyMatchupInfo = {
         weeklyMatchup: [
           {
             squadUID: 'mLjGwubov66ji4fPIRSI', //Josh
-            selectedTeam:
+            selectedSquads:
               [{ category: 'rushingTeam', team: 'Kent State', points: 0 },
               { category: 'passingTeam', team: 'Arkansas State', points: 0 },
               { category: 'defensiveTeam', team: 'Texas A&M', points: 0 }],
@@ -189,7 +189,7 @@ export const week5: WeeklyMatchupInfo = {
           },
           {
             squadUID: '52X2QiXz7OCrNRpjjt2U', //Tyler D
-            selectedTeam:
+            selectedSquads:
               [{ category: 'rushingTeam', team: 'Appalachian State', points: 0 },
               { category: 'passingTeam', team: 'North Carolina', points: 0 },
               { category: 'defensiveTeam', team: 'Ohio State', points: 0 }],
@@ -201,7 +201,7 @@ export const week5: WeeklyMatchupInfo = {
         weeklyMatchup: [
           {
             squadUID: 'o6WsnetFzo0xfi0DgPKa', //Justin
-            selectedTeam:
+            selectedSquads:
               [{ category: 'rushingTeam', team: 'Army', points: 0 },
               { category: 'passingTeam', team: 'Notre Dame', points: 0 },
               { category: 'defensiveTeam', team: 'BYU', points: 0 }],
@@ -209,7 +209,7 @@ export const week5: WeeklyMatchupInfo = {
           },
           {
             squadUID: 'EcdJ4qnzOVITIEJUPpyP', //Ben
-            selectedTeam:
+            selectedSquads:
               [{ category: 'rushingTeam', team: 'Coastal Carolina', points: 0 },
               { category: 'passingTeam', team: 'Mississippi State', points: 0 },
               { category: 'defensiveTeam', team: 'Clemson', points: 0 }],
